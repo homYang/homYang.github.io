@@ -24,7 +24,7 @@
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/Generic%20SP%20algorithm.png">
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/Dijkstra.png">
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/Dijkstra2.png">
-<meta property="og:updated_time" content="2022-03-09T17:17:30.609Z">
+<meta property="og:updated_time" content="2022-03-09T17:25:49.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Algorithms】图">
 <meta name="twitter:description" content="一、无向图基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  深度优先搜索（递归）广度优先搜索（队列）二、有向图基础知识 入度 / 出度 环 有向无环图 DAG  拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS">
@@ -197,23 +197,24 @@ var _hmt = _hmt || [];
 <h3 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ul>
 <li>一个无向图的 无向子图</li>
 <li>连接所有顶点</li>
-<li>最小权重<h4 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h4></li>
+<li>最小权重</li>
 </ul>
-<p>1、根据树的两个最重要的性质得到最小生成树算法：</p>
+<h4 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h4><p>1、根据树的两个最重要的性质得到最小生成树算法：</p>
 <ul>
 <li>连接任意两个顶点会产生新环；</li>
 <li>删除任意一条边会得到两棵独立的树。</li>
 </ul>
 <p>2、切分原理 Cut property</p>
+<p>概念</p>
 <ul>
 <li>切分是把图分成两个非空集合。</li>
 <li><p>横切边连接上述两个集合。</p>
 <p>  命题（切分定理）：一副加权图中，给定任意切分，最小权重的横切边必然属于图的最小生成树。可用反证法证得。</p>
-<p>  <strong>切分定理是解决最小生成树问题的所有算法的基础</strong>：使用切分定理找到最小生成树的一条边，不断重复，直到找到所有边。这些算法之间不同之处在于保存切分和判定最小权重横切边的方式。</p>
-<p>  命题（最小生成树的贪心算法）：含有V个顶点的任意加权连通图，初始状态所以边均为灰色，找到一种切分，它产生的横切边均不为黑色。将权重最小的横切边标记为黑色，反复直到标记了 V-1 条黑色边。</p>
 </li>
 </ul>
-<h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="MST API.png" alt=""><br><img src="Edge-weighted graph.png" alt=""></p>
+<p><strong>切分定理是解决最小生成树问题的所有算法的基础</strong>：使用切分定理找到最小生成树的一条边，不断重复，直到找到所有边。这些算法之间不同之处在于保存切分和判定最小权重横切边的方式。</p>
+<pre><code>命题（最小生成树的贪心算法）：含有V个顶点的任意加权连通图，初始状态所以边均为灰色，找到一种切分，它产生的横切边均不为黑色。将权重最小的横切边标记为黑色，反复直到标记了 V-1 条黑色边。
+</code></pre><h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="MST API.png" alt=""><br><img src="Edge-weighted graph.png" alt=""></p>
 <h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><p>方法：</p>
 <ul>
 <li>按升序把边加入 MST 集合，若要加入的边与集合中的边形成环，则忽略这条边</li>
@@ -225,13 +226,10 @@ var _hmt = _hmt || [];
 <blockquote>
 <p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.<br>  <em>Efficient solution</em>. Use the union-find data structure.<br>・Maintain a set for each connected component in T.<br>・If v and w are in same set, then adding v–w would create a cycle.<br>・To add v–w to T, merge sets containing v and w.</p>
 </blockquote>
-<ul>
-<li><p>结论</p>
-<p>  Proposition. Kruskal’s algorithm computes MST in time proportional to E log E (in the worst case).</p>
-<p>  Remark. If edges are already sorted, order of growth is E log* V.</p>
-</li>
-</ul>
-<p><img src="kruskal.png" alt=""></p>
+<pre><code>Proposition. Kruskal&apos;s algorithm computes MST in time proportional to E log E (in the worst case).
+
+Remark. If edges are already sorted, order of growth is E log* V.
+</code></pre><p><img src="kruskal.png" alt=""></p>
 <h4 id="Prim-算法"><a href="#Prim-算法" class="headerlink" title="Prim 算法"></a>Prim 算法</h4><p><strong>lazy implementation</strong></p>
 <p>方法：</p>
 <ol>

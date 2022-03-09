@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/MST%20API.png">
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/Edge-weighted%20graph.png">
-<meta property="og:updated_time" content="2022-03-09T11:25:04.871Z">
+<meta property="og:updated_time" content="2022-03-09T11:35:20.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Algorithms】图">
 <meta name="twitter:description" content="一、无向图基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  深度优先搜索（递归）广度优先搜索（队列）二、有向图基础知识 入度 / 出度 环 有向无环图 DAG  拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS">
@@ -194,10 +194,8 @@ var _hmt = _hmt || [];
 </ul>
 <p>1、根据树的两个最重要的性质得到最小生成树算法：</p>
 <ol>
-<li><p>连接任意两个顶点会产生新环；</p>
-</li>
-<li><p>删除任意一条边会得到两棵独立的树。</p>
-</li>
+<li>连接任意两个顶点会产生新环；</li>
+<li>删除任意一条边会得到两棵独立的树。</li>
 </ol>
 <p>2、切分原理 Cut property</p>
 <blockquote>

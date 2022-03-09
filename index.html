@@ -178,7 +178,9 @@ var _hmt = _hmt || [];
 </ul>
 <h4 id="拓扑排序：深度优先搜索逆序。"><a href="#拓扑排序：深度优先搜索逆序。" class="headerlink" title="拓扑排序：深度优先搜索逆序。"></a>拓扑排序：深度优先搜索逆序。</h4><ul>
 <li>条件：DAG</li>
-<li>应用：事情的完成顺序<h4 id="强连通性-Strong-Connect-Component"><a href="#强连通性-Strong-Connect-Component" class="headerlink" title="强连通性 Strong Connect Component"></a>强连通性 Strong Connect Component</h4></li>
+<li>应用：事情的完成顺序</li>
+</ul>
+<h4 id="强连通性-Strong-Connect-Component"><a href="#强连通性-Strong-Connect-Component" class="headerlink" title="强连通性 Strong Connect Component"></a>强连通性 Strong Connect Component</h4><ul>
 <li>强连通分量</li>
 <li>求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS</li>
 </ul>
@@ -193,14 +195,9 @@ var _hmt = _hmt || [];
 <li>删除任意一条边会得到两棵独立的树。</li>
 </ul>
 <p>2、切分原理 Cut property</p>
-<p>概念</p>
-<ul>
-<li>切分是把图分成两个非空集合。</li>
-<li><p>横切边连接上述两个集合。</p>
-<p>  命题（切分定理）：一副加权图中，给定任意切分，最小权重的横切边必然属于图的最小生成树。可用反证法证得。</p>
-</li>
-</ul>
-<p><strong>切分定理是解决最小生成树问题的所有算法的基础</strong>：使用切分定理找到最小生成树的一条边，不断重复，直到找到所有边。这些算法之间不同之处在于保存切分和判定最小权重横切边的方式。</p>
+<p>・ 切分是把图分成两个非空集合。<br>・ 横切边连接上述两个集合。</p>
+<pre><code>命题（切分定理）：一副加权图中，给定任意切分，最小权重的横切边必然属于图的最小生成树。可用反证法证得。
+</code></pre><p><strong>切分定理是解决最小生成树问题的所有算法的基础</strong>：使用切分定理找到最小生成树的一条边，不断重复，直到找到所有边。这些算法之间不同之处在于保存切分和判定最小权重横切边的方式。</p>
 <pre><code>命题（最小生成树的贪心算法）：含有V个顶点的任意加权连通图，初始状态所以边均为灰色，找到一种切分，它产生的横切边均不为黑色。将权重最小的横切边标记为黑色，反复直到标记了 V-1 条黑色边。
 </code></pre><h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="MST API.png" alt=""><br><img src="Edge-weighted graph.png" alt=""></p>
 <h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><p>方法：</p>

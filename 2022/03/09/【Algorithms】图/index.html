@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/kruskal.png">
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/Prim.png">
 <meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/Prim2.png">
-<meta property="og:updated_time" content="2022-03-09T13:59:16.527Z">
+<meta property="og:updated_time" content="2022-03-09T14:05:41.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Algorithms】图">
 <meta name="twitter:description" content="一、无向图基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  深度优先搜索（递归）广度优先搜索（队列）二、有向图基础知识 入度 / 出度 环 有向无环图 DAG  拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS">
@@ -216,28 +216,10 @@ var _hmt = _hmt || [];
 <li>重复，直到树中有 V-1 条边为止</li>
 </ul>
 <blockquote>
-<p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.<br>How difficult?</p>
+<p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.<br>How difficult?<br>・V            &lt;– run DFS from v, check if w is reachable (T has at most V – 1 edges)<br>・log* V    &lt;– use the union-find data structure !</p>
 </blockquote>
 <blockquote>
-<p>・V            &lt;– run DFS from v, check if w is reachable (T has at most V – 1 edges)</p>
-</blockquote>
-<blockquote>
-<p>・log* V    &lt;– use the union-find data structure !</p>
-</blockquote>
-<blockquote>
-<p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.</p>
-</blockquote>
-<blockquote>
-<p><em>Efficient solution</em>. Use the union-find data structure.</p>
-</blockquote>
-<blockquote>
-<p>・Maintain a set for each connected component in T.</p>
-</blockquote>
-<blockquote>
-<p>・If v and w are in same set, then adding v–w would create a cycle.</p>
-</blockquote>
-<blockquote>
-<p>・To add v–w to T, merge sets containing v and w.</p>
+<p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.<br>  <em>Efficient solution</em>. Use the union-find data structure.<br>・Maintain a set for each connected component in T.<br>・If v and w are in same set, then adding v–w would create a cycle.<br>・To add v–w to T, merge sets containing v and w.</p>
 </blockquote>
 <ul>
 <li><p>结论</p>
@@ -266,7 +248,12 @@ var _hmt = _hmt || [];
 <li>否则，边的另一个顶点标记 “已加入”，goto第二步</li>
 <li>重复，直到树中有 V-1 条边为止</li>
 </ol>
-<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><h4 id="Dijkstra-算法"><a href="#Dijkstra-算法" class="headerlink" title="Dijkstra 算法"></a>Dijkstra 算法</h4><h4 id="无环加权有向图-edge-weighted-DAGs"><a href="#无环加权有向图-edge-weighted-DAGs" class="headerlink" title="无环加权有向图 edge-weighted DAGs"></a>无环加权有向图 edge-weighted DAGs</h4><h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4>
+<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><ul>
+<li>地图导航</li>
+<li>网络路由协议</li>
+<li>Seam carving<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><h4 id="Dijkstra-算法"><a href="#Dijkstra-算法" class="headerlink" title="Dijkstra 算法"></a>Dijkstra 算法</h4><h4 id="无环加权有向图-edge-weighted-DAGs"><a href="#无环加权有向图-edge-weighted-DAGs" class="headerlink" title="无环加权有向图 edge-weighted DAGs"></a>无环加权有向图 edge-weighted DAGs</h4><h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4></li>
+</ul>
+
       
 
       

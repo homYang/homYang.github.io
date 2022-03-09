@@ -15,13 +15,13 @@
 <meta property="og:site_name" content="homYang&#39;s blog">
 <meta property="og:description" content="一、无向图基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  深度优先搜索（递归）广度优先搜索（队列）二、有向图基础知识 入度 / 出度 环 有向无环图 DAG  拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://homyeung.github.io/Users/homyang/Hexo/source/_posts/MST%20API.png">
-<meta property="og:image" content="https://homyeung.github.io/Users/homyang/Hexo/source/_posts/Edge-weighted%20graph.png">
-<meta property="og:updated_time" content="2022-03-09T11:13:07.794Z">
+<meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/MST%20API.png">
+<meta property="og:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/Edge-weighted%20graph.png">
+<meta property="og:updated_time" content="2022-03-09T11:25:04.871Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Algorithms】图">
 <meta name="twitter:description" content="一、无向图基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  深度优先搜索（递归）广度优先搜索（队列）二、有向图基础知识 入度 / 出度 环 有向无环图 DAG  拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS">
-<meta name="twitter:image" content="https://homyeung.github.io/Users/homyang/Hexo/source/_posts/MST%20API.png">
+<meta name="twitter:image" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/MST%20API.png">
   
   
     <link rel="icon" href="/assets/h.jpg">
@@ -211,7 +211,7 @@ var _hmt = _hmt || [];
 
 这些算法之间不同之处在于保存切分和判定最小权重横切边的方式。
 </code></pre><p><strong>命题（最小生成树的贪心算法）：含有V个顶点的任意加权连通图，初始状态所以边均为灰色，找到一种切分，它产生的横切边均不为黑色。将权重最小的横切边标记为黑色，反复直到标记了 V-1 条黑色边。</strong></p>
-<h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="/Users/homyang/Hexo/source/_posts/MST API.png" alt=""><br><img src="/Users/homyang/Hexo/source/_posts/Edge-weighted graph.png" alt=""></p>
+<h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="MST API.png" alt=""><br><img src="Edge-weighted graph.png" alt=""></p>
 <h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><h4 id="Prim-算法"><a href="#Prim-算法" class="headerlink" title="Prim 算法"></a>Prim 算法</h4><ul>
 <li>lazy implementation</li>
 <li>eager implementation</li>

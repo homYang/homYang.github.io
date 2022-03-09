@@ -240,12 +240,63 @@ var _hmt = _hmt || [];
 <li>否则，边的另一个顶点标记 “已加入”，goto第二步</li>
 <li>重复，直到树中有 V-1 条边为止</li>
 </ol>
-<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><ul>
+<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>应用</p>
+<ul>
 <li>地图导航</li>
 <li>网络路由协议</li>
-<li>Seam carving<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><h4 id="Dijkstra-算法"><a href="#Dijkstra-算法" class="headerlink" title="Dijkstra 算法"></a>Dijkstra 算法</h4><h4 id="无环加权有向图-edge-weighted-DAGs"><a href="#无环加权有向图-edge-weighted-DAGs" class="headerlink" title="无环加权有向图 edge-weighted DAGs"></a>无环加权有向图 edge-weighted DAGs</h4><h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4></li>
+<li>Seam carving</li>
 </ul>
-
+<p>分情况讨论</p>
+<p>那些顶点？</p>
+<ul>
+<li><strong>单源最短路径</strong>：从顶点s 到其他所有顶点</li>
+<li>source-sink：一个顶点s 到另一个顶点t</li>
+<li>all pairs</li>
+</ul>
+<p>带权边的限制</p>
+<ul>
+<li>没有负权重</li>
+<li>欧几里得权重</li>
+<li>任意权重</li>
+</ul>
+<p>环</p>
+<ul>
+<li>没有有向环</li>
+<li>没有负权重环</li>
+</ul>
+<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><p>1、目标：找到单源最短路径，假设源顶点s</p>
+<p>方法：</p>
+<ul>
+<li>dist[] ：顶点 s 到下标顶点 w 的最短路径</li>
+<li>edge[] ：顶点 s 到下标顶点 w 路径中的最后一条边</li>
+</ul>
+<p>2、边的松弛 Edge relaxation</p>
+<p><strong>最短路径的实现都基于一个称为松弛的简单操作。</strong></p>
+<p><em>放松边 e=v-&gt;w 意味着：检查 s到w的最短路径 是否 s经过v再到w</em>，如果是，称e的放松是成功的。</p>
+<blockquote>
+<p>松弛术语来自：用一根橡皮筋沿着连接两个顶点的路径紧紧展开的比喻：放松一条边类似将橡皮筋转移到一条更短的路径上，从而缓解了橡皮筋的压力。</p>
+</blockquote>
+<p>3、最短路径算法理论基础</p>
+<p><img src="optimality condition pf.png" alt=""></p>
+<p>4、通用算法</p>
+<p><img src="Generic SP algorithm.png" alt=""></p>
+<blockquote>
+<p>Efficient implementations. How to choose which edge to relax?<br>Ex 1. Dijkstra’s algorithm (nonnegative weights).<br>Ex 2. Topological sort algorithm (no directed cycles).<br>Ex 3. Bellman-Ford algorithm (no negative cycles).</p>
+</blockquote>
+<h4 id="Dijkstra-算法-（权重非负的加权无向图）"><a href="#Dijkstra-算法-（权重非负的加权无向图）" class="headerlink" title="Dijkstra 算法 （权重非负的加权无向图）"></a>Dijkstra 算法 （权重非负的加权无向图）</h4><ol>
+<li>初始化distTo[] 为正无穷，起始顶点s distTo[s] = 0，放松与s连接的所有边，更新edge[] distTo[]</li>
+<li>类似Prim算法，标记“已放松的顶点”，把它的边加入优先队列（最小堆）</li>
+<li>放松 minPQ 的那条边。（因为这条边是连接s 的最短路径了，先放松它，它连接的顶点也会得到最短路径） </li>
+<li>重复，直到所有顶点“已放松”</li>
+</ol>
+<p><img src="Dijkstra.png" alt=""><br><img src="Dijkstra2.png" alt=""></p>
+<blockquote>
+<p>Dijkstra’s algorithm seem familiar?<br>・Prim’s algorithm is essentially the same algorithm.<br>・Both are in a family of algorithms that compute a graph’s spanning tree.</p>
+</blockquote>
+<blockquote>
+<p>Main distinction: Rule used to choose next vertex for the tree.<br>・Prim’s: Closest vertex to the tree (via an undirected edge).<br>・Dijkstra’s: Closest vertex to the source (via a directed path).</p>
+</blockquote>
+<h4 id="按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）"><a href="#按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）" class="headerlink" title="按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）"></a>按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）</h4><h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4>
       
 
       

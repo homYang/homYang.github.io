@@ -216,17 +216,16 @@ var _hmt = _hmt || [];
 Remark. If edges are already sorted, order of growth is E log* V.
 </code></pre><p><img src="kruskal.png" alt=""></p>
 <h4 id="Prim-算法"><a href="#Prim-算法" class="headerlink" title="Prim 算法"></a>Prim 算法</h4><p><strong>lazy implementation</strong></p>
-<p>方法：</p>
 <ol>
 <li>从顶点0开始，标记顶点 “已加入”</li>
 <li>把“已加入”顶点的所有边加入优先队列（最小堆）</li>
 <li>把 minPQ 边加入 MST。若边的两端都 “已加入”，忽略这条边</li>
 <li>否则，边的另一个顶点标记 “已加入”，goto第二步</li>
-<li><p>重复，直到树中有 V-1 条边为止</p>
-<p> Proposition. Lazy Prim’s algorithm computes the MST in time proportional to E log E and extra space proportional to E (in the worst case).</p>
-</li>
+<li>重复，直到树中有 V-1 条边为止</li>
 </ol>
-<p><img src="Prim.png" alt=""><br><img src="Prim2.png" alt=""></p>
+<p>算法复杂度</p>
+<pre><code>Proposition. Lazy Prim&apos;s algorithm computes the MST in time proportional to E log E and extra space proportional to E (in the worst case).
+</code></pre><p><img src="Prim.png" alt=""><br><img src="Prim2.png" alt=""></p>
 <p><strong>eager implementation</strong></p>
 <ol>
 <li>从顶点0开始，标记顶点“已加入”</li>
@@ -235,29 +234,34 @@ Remark. If edges are already sorted, order of growth is E log* V.
 <li>否则，边的另一个顶点标记 “已加入”，goto第二步</li>
 <li>重复，直到树中有 V-1 条边为止</li>
 </ol>
-<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>应用</p>
+<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>1、应用</p>
 <ul>
 <li>地图导航</li>
 <li>网络路由协议</li>
 <li>Seam carving</li>
 </ul>
-<p>分情况讨论</p>
-<p>那些顶点？</p>
+<p>2、分情况讨论</p>
+<ul>
+<li><p>那些顶点？</p>
 <ul>
 <li><strong>单源最短路径</strong>：从顶点s 到其他所有顶点</li>
 <li>source-sink：一个顶点s 到另一个顶点t</li>
 <li>all pairs</li>
 </ul>
-<p>带权边的限制</p>
+</li>
+<li><p>权重的限制</p>
 <ul>
 <li>没有负权重</li>
 <li>欧几里得权重</li>
 <li>任意权重</li>
 </ul>
-<p>环</p>
+</li>
+<li><p>环</p>
 <ul>
 <li>没有有向环</li>
 <li>没有负权重环</li>
+</ul>
+</li>
 </ul>
 <h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><p>1、目标：找到单源最短路径，假设源顶点s</p>
 <p>方法：</p>

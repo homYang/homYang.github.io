@@ -164,39 +164,54 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="一、无向图"><a href="#一、无向图" class="headerlink" title="一、无向图"></a>一、无向图</h3><h4 id="1-基础知识"><a href="#1-基础知识" class="headerlink" title="1.基础知识"></a>1.基础知识</h4><ul>
+        <h3 id="一、无向图"><a href="#一、无向图" class="headerlink" title="一、无向图"></a>一、无向图</h3><h4 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h4><ul>
 <li>顶点</li>
 <li>边</li>
 <li>邻接表</li>
 <li>邻接矩阵</li>
 <li>连通分量：即一棵树。森林里有多个连通分量</li>
 </ul>
-<h4 id="2-深度优先搜索（递归）"><a href="#2-深度优先搜索（递归）" class="headerlink" title="2. 深度优先搜索（递归）"></a>2. 深度优先搜索（递归）</h4><h4 id="3-广度优先搜索（队列）"><a href="#3-广度优先搜索（队列）" class="headerlink" title="3. 广度优先搜索（队列）"></a>3. 广度优先搜索（队列）</h4><h3 id="二、有向图"><a href="#二、有向图" class="headerlink" title="二、有向图"></a>二、有向图</h3><h4 id="1-基础知识-1"><a href="#1-基础知识-1" class="headerlink" title="1. 基础知识"></a>1. 基础知识</h4><ul>
+<h4 id="深度优先搜索（递归）"><a href="#深度优先搜索（递归）" class="headerlink" title="深度优先搜索（递归）"></a>深度优先搜索（递归）</h4><h4 id="广度优先搜索（队列）"><a href="#广度优先搜索（队列）" class="headerlink" title="广度优先搜索（队列）"></a>广度优先搜索（队列）</h4><h3 id="二、有向图"><a href="#二、有向图" class="headerlink" title="二、有向图"></a>二、有向图</h3><h4 id="基础知识-1"><a href="#基础知识-1" class="headerlink" title="基础知识"></a>基础知识</h4><ul>
 <li>入度 / 出度</li>
 <li>环</li>
 <li>有向无环图 DAG</li>
 </ul>
-<h4 id="2-拓扑排序：深度优先搜索逆序。"><a href="#2-拓扑排序：深度优先搜索逆序。" class="headerlink" title="2. 拓扑排序：深度优先搜索逆序。"></a>2. 拓扑排序：深度优先搜索逆序。</h4><ul>
+<h4 id="拓扑排序：深度优先搜索逆序。"><a href="#拓扑排序：深度优先搜索逆序。" class="headerlink" title="拓扑排序：深度优先搜索逆序。"></a>拓扑排序：深度优先搜索逆序。</h4><ul>
 <li>条件：DAG</li>
-<li>应用：事情的完成顺序<h4 id="3-强连通性-Strong-Connect-Component"><a href="#3-强连通性-Strong-Connect-Component" class="headerlink" title="3. 强连通性 Strong Connect Component"></a>3. 强连通性 Strong Connect Component</h4></li>
+<li>应用：事情的完成顺序<h4 id="强连通性-Strong-Connect-Component"><a href="#强连通性-Strong-Connect-Component" class="headerlink" title="强连通性 Strong Connect Component"></a>强连通性 Strong Connect Component</h4></li>
 <li>强连通分量</li>
 <li>求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS</li>
 </ul>
-<h3 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h3><h4 id="1-什么是MST-？"><a href="#1-什么是MST-？" class="headerlink" title="1. 什么是MST ？"></a>1. 什么是MST ？</h4><ul>
+<h3 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ul>
 <li>一个无向图的 无向子图</li>
 <li>连接所有顶点</li>
-<li><p>最小权重</p>
-<h4 id="2-原理"><a href="#2-原理" class="headerlink" title="2. 原理"></a>2. 原理</h4></li>
-<li><p>根据树的两个最重要的性质得到 MST 算法：</p>
-<p>  1、连接任意两个顶点会产生新环；</p>
-<p>  2、删除任意一条边会得到两棵独立的树。</p>
+<li>最小权重<h4 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h4></li>
+</ul>
+<p>1、根据树的两个最重要的性质得到最小生成树算法：</p>
+<ol>
+<li><p>连接任意两个顶点会产生新环；</p>
 </li>
-<li>切分原理 Cut property</li>
-<li>顶点放松 Relax<h4 id="3-加权无向图"><a href="#3-加权无向图" class="headerlink" title="3. 加权无向图"></a>3. 加权无向图</h4><h4 id="4-Kruskal-算法"><a href="#4-Kruskal-算法" class="headerlink" title="4. Kruskal 算法"></a>4. Kruskal 算法</h4><h4 id="5-Prim-算法"><a href="#5-Prim-算法" class="headerlink" title="5. Prim 算法"></a>5. Prim 算法</h4></li>
+<li><p>删除任意一条边会得到两棵独立的树。</p>
+</li>
+</ol>
+<p>2、切分原理 Cut property</p>
+<blockquote>
+<p>切分是把图分成两个非空集合。</p>
+</blockquote>
+<blockquote>
+<p>横切边连接上述两个集合。</p>
+</blockquote>
+<p><strong>命题（切分定理）：一副加权图中，给定任意切分，最小权重的横切边必然属于图的最小生成树。</strong> 可用反证法证得。</p>
+<pre><code>切分定理是解决最小生成树问题的所有算法的基础：使用切分定理找到最小生成树的一条边，不断重复，直到找到所有边。
+
+这些算法之间不同之处在于保存切分和判定最小权重横切边的方式。
+</code></pre><p><strong>命题（最小生成树的贪心算法）：含有V个顶点的任意加权连通图，初始状态所以边均为灰色，找到一种切分，它产生的横切边均不为黑色。将权重最小的横切边标记为黑色，反复直到标记了 V-1 条黑色边。</strong></p>
+<h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="/Users/homyang/Hexo/source/_posts/MST API.png" alt=""><br><img src="/Users/homyang/Hexo/source/_posts/Edge-weighted graph.png" alt=""></p>
+<h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><h4 id="Prim-算法"><a href="#Prim-算法" class="headerlink" title="Prim 算法"></a>Prim 算法</h4><ul>
 <li>lazy implementation</li>
 <li>eager implementation</li>
 </ul>
-<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="1-性质"><a href="#1-性质" class="headerlink" title="1. 性质"></a>1. 性质</h4><h4 id="2-Dijkstra-算法"><a href="#2-Dijkstra-算法" class="headerlink" title="2. Dijkstra 算法"></a>2. Dijkstra 算法</h4><h4 id="3-无环加权有向图-edge-weighted-DAGs"><a href="#3-无环加权有向图-edge-weighted-DAGs" class="headerlink" title="3. 无环加权有向图 edge-weighted DAGs"></a>3. 无环加权有向图 edge-weighted DAGs</h4><h4 id="4-一般加权有向图"><a href="#4-一般加权有向图" class="headerlink" title="4. 一般加权有向图"></a>4. 一般加权有向图</h4>
+<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><h4 id="Dijkstra-算法"><a href="#Dijkstra-算法" class="headerlink" title="Dijkstra 算法"></a>Dijkstra 算法</h4><h4 id="无环加权有向图-edge-weighted-DAGs"><a href="#无环加权有向图-edge-weighted-DAGs" class="headerlink" title="无环加权有向图 edge-weighted DAGs"></a>无环加权有向图 edge-weighted DAGs</h4><h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4>
       
 
       

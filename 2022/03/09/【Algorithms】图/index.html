@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://homyeung.github.io">
   <title>【Algorithms】图 | homYang&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、无向图 基础知识  顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量   深度优先搜索（递归）  广度优先搜索（队列）  二、有向图 基础知识  入度 / 出度 环 有向无环图 DAG   拓扑排序：深度优先搜索逆序。  条件：DAG 应用：事情的完成顺序   强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对">
+  <meta name="description" content="一、无向图1.基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  2. 深度优先搜索（递归）3. 广度优先搜索（队列）二、有向图1. 基础知识 入度 / 出度 环 有向无环图 DAG  2. 拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序3. 强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Algorithms】图">
 <meta property="og:url" content="https://homyeung.github.io/2022/03/09/【Algorithms】图/index.html">
 <meta property="og:site_name" content="homYang&#39;s blog">
-<meta property="og:description" content="一、无向图 基础知识  顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量   深度优先搜索（递归）  广度优先搜索（队列）  二、有向图 基础知识  入度 / 出度 环 有向无环图 DAG   拓扑排序：深度优先搜索逆序。  条件：DAG 应用：事情的完成顺序   强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对">
+<meta property="og:description" content="一、无向图1.基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  2. 深度优先搜索（递归）3. 广度优先搜索（队列）二、有向图1. 基础知识 入度 / 出度 环 有向无环图 DAG  2. 拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序3. 强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2022-03-09T09:57:33.710Z">
+<meta property="og:updated_time" content="2022-03-09T10:05:51.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Algorithms】图">
-<meta name="twitter:description" content="一、无向图 基础知识  顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量   深度优先搜索（递归）  广度优先搜索（队列）  二、有向图 基础知识  入度 / 出度 环 有向无环图 DAG   拓扑排序：深度优先搜索逆序。  条件：DAG 应用：事情的完成顺序   强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法——对">
+<meta name="twitter:description" content="一、无向图1.基础知识 顶点 边 邻接表 邻接矩阵 连通分量：即一棵树。森林里有多个连通分量  2. 深度优先搜索（递归）3. 广度优先搜索（队列）二、有向图1. 基础知识 入度 / 出度 环 有向无环图 DAG  2. 拓扑排序：深度优先搜索逆序。 条件：DAG 应用：事情的完成顺序3. 强连通性 Strong Connect Component 强连通分量 求SCC方法：Kosaraju 算法">
   
   
     <link rel="icon" href="/assets/h.jpg">
@@ -166,73 +166,39 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="一、无向图"><a href="#一、无向图" class="headerlink" title="一、无向图"></a>一、无向图</h3><ol>
-<li><p>基础知识</p>
-<ul>
+        <h3 id="一、无向图"><a href="#一、无向图" class="headerlink" title="一、无向图"></a>一、无向图</h3><h4 id="1-基础知识"><a href="#1-基础知识" class="headerlink" title="1.基础知识"></a>1.基础知识</h4><ul>
 <li>顶点</li>
 <li>边</li>
 <li>邻接表</li>
 <li>邻接矩阵</li>
 <li>连通分量：即一棵树。森林里有多个连通分量</li>
 </ul>
-</li>
-<li><p>深度优先搜索（递归）</p>
-</li>
-<li>广度优先搜索（队列）</li>
-</ol>
-<h3 id="二、有向图"><a href="#二、有向图" class="headerlink" title="二、有向图"></a>二、有向图</h3><ol>
-<li><p>基础知识</p>
-<ul>
+<h4 id="2-深度优先搜索（递归）"><a href="#2-深度优先搜索（递归）" class="headerlink" title="2. 深度优先搜索（递归）"></a>2. 深度优先搜索（递归）</h4><h4 id="3-广度优先搜索（队列）"><a href="#3-广度优先搜索（队列）" class="headerlink" title="3. 广度优先搜索（队列）"></a>3. 广度优先搜索（队列）</h4><h3 id="二、有向图"><a href="#二、有向图" class="headerlink" title="二、有向图"></a>二、有向图</h3><h4 id="1-基础知识-1"><a href="#1-基础知识-1" class="headerlink" title="1. 基础知识"></a>1. 基础知识</h4><ul>
 <li>入度 / 出度</li>
 <li>环</li>
 <li>有向无环图 DAG</li>
 </ul>
-</li>
-<li><p>拓扑排序：深度优先搜索逆序。</p>
-<ul>
+<h4 id="2-拓扑排序：深度优先搜索逆序。"><a href="#2-拓扑排序：深度优先搜索逆序。" class="headerlink" title="2. 拓扑排序：深度优先搜索逆序。"></a>2. 拓扑排序：深度优先搜索逆序。</h4><ul>
 <li>条件：DAG</li>
-<li>应用：事情的完成顺序</li>
-</ul>
-</li>
-<li>强连通性 Strong Connect Component<ul>
+<li>应用：事情的完成顺序<h4 id="3-强连通性-Strong-Connect-Component"><a href="#3-强连通性-Strong-Connect-Component" class="headerlink" title="3. 强连通性 Strong Connect Component"></a>3. 强连通性 Strong Connect Component</h4></li>
 <li>强连通分量</li>
 <li>求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS</li>
 </ul>
-</li>
-</ol>
-<h3 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h3><ol>
-<li>什么是MST ？<ul>
+<h3 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h3><h4 id="1-什么是MST-？"><a href="#1-什么是MST-？" class="headerlink" title="1. 什么是MST ？"></a>1. 什么是MST ？</h4><ul>
 <li>一个无向图的 无向子图</li>
 <li>连接所有顶点</li>
-<li>最小权重</li>
-</ul>
+<li><p>最小权重</p>
+<h4 id="2-原理"><a href="#2-原理" class="headerlink" title="2. 原理"></a>2. 原理</h4></li>
+<li><p>根据树的两个最重要的性质得到 MST 算法：</p>
+<p>  1、连接任意两个顶点会产生新环；</p>
+<p>  2、删除任意一条边会得到两棵独立的树。</p>
 </li>
-<li><p>原理</p>
-<ul>
-<li>根据树的两个最重要的性质得到 MST 算法：<pre><code>* 1、连接任意两个顶点会产生新环； 
-* 2、删除任意一条边会得到两棵独立的树。
-</code></pre><ul>
 <li>切分原理 Cut property</li>
-<li>顶点放松 Relax</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>加权无向图</li>
-<li>Kruskal 算法</li>
-<li>Prim 算法<ul>
+<li>顶点放松 Relax<h4 id="3-加权无向图"><a href="#3-加权无向图" class="headerlink" title="3. 加权无向图"></a>3. 加权无向图</h4><h4 id="4-Kruskal-算法"><a href="#4-Kruskal-算法" class="headerlink" title="4. Kruskal 算法"></a>4. Kruskal 算法</h4><h4 id="5-Prim-算法"><a href="#5-Prim-算法" class="headerlink" title="5. Prim 算法"></a>5. Prim 算法</h4></li>
 <li>lazy implementation</li>
 <li>eager implementation</li>
 </ul>
-</li>
-</ol>
-<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><ol>
-<li>性质</li>
-<li>Dijkstra 算法</li>
-<li>无环加权有向图 edge-weighted DAGs</li>
-<li>一般加权有向图</li>
-</ol>
-
+<h3 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h3><h4 id="1-性质"><a href="#1-性质" class="headerlink" title="1. 性质"></a>1. 性质</h4><h4 id="2-Dijkstra-算法"><a href="#2-Dijkstra-算法" class="headerlink" title="2. Dijkstra 算法"></a>2. Dijkstra 算法</h4><h4 id="3-无环加权有向图-edge-weighted-DAGs"><a href="#3-无环加权有向图-edge-weighted-DAGs" class="headerlink" title="3. 无环加权有向图 edge-weighted DAGs"></a>3. 无环加权有向图 edge-weighted DAGs</h4><h4 id="4-一般加权有向图"><a href="#4-一般加权有向图" class="headerlink" title="4. 一般加权有向图"></a>4. 一般加权有向图</h4>
       
 
       

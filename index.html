@@ -178,22 +178,16 @@ var _hmt = _hmt || [];
 </ul>
 <h4 id="拓扑排序：深度优先搜索逆序。"><a href="#拓扑排序：深度优先搜索逆序。" class="headerlink" title="拓扑排序：深度优先搜索逆序。"></a>拓扑排序：深度优先搜索逆序。</h4><ul>
 <li>条件：DAG</li>
+<li>排序中，顶点v 之后的顶点，都不会指向顶点v</li>
 <li>应用：事情的完成顺序</li>
 </ul>
 <h4 id="强连通性-Strong-Connect-Component"><a href="#强连通性-Strong-Connect-Component" class="headerlink" title="强连通性 Strong Connect Component"></a>强连通性 Strong Connect Component</h4><ul>
 <li>强连通分量</li>
 <li>求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS</li>
 </ul>
-<h3 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><ul>
-<li>一个无向图的 无向子图</li>
-<li>连接所有顶点</li>
-<li>最小权重</li>
-</ul>
+<h3 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>・ 一个<strong>无向图</strong>的 无向子图<br>・ 连接所有顶点<br>・ 最小权重</p>
 <h4 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h4><p>1、根据树的两个最重要的性质得到最小生成树算法：</p>
-<ul>
-<li>连接任意两个顶点会产生新环；</li>
-<li>删除任意一条边会得到两棵独立的树。</li>
-</ul>
+<p>・ 连接任意两个顶点会产生新环；<br>・ 删除任意一条边会得到两棵独立的树。</p>
 <p>2、切分原理 Cut property</p>
 <p>・ 切分是把图分成两个非空集合。<br>・ 横切边连接上述两个集合。</p>
 <pre><code>命题（切分定理）：一副加权图中，给定任意切分，最小权重的横切边必然属于图的最小生成树。可用反证法证得。
@@ -201,10 +195,7 @@ var _hmt = _hmt || [];
 <pre><code>命题（最小生成树的贪心算法）：含有V个顶点的任意加权连通图，初始状态所以边均为灰色，找到一种切分，它产生的横切边均不为黑色。将权重最小的横切边标记为黑色，反复直到标记了 V-1 条黑色边。
 </code></pre><h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="MST API.png" alt=""><br><img src="Edge-weighted graph.png" alt=""></p>
 <h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><p>方法：</p>
-<ul>
-<li>按升序把边加入 MST 集合，若要加入的边与集合中的边形成环，则忽略这条边</li>
-<li>重复，直到树中有 V-1 条边为止</li>
-</ul>
+<p>・ 按升序把边加入 MST 集合，若要加入的边与集合中的边形成环，则忽略这条边<br>・ 重复，直到树中有 V-1 条边为止</p>
 <blockquote>
 <p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.<br>How difficult?<br>・V            &lt;– run DFS from v, check if w is reachable (T has at most V – 1 edges)<br>・log* V    &lt;– use the union-find data structure !</p>
 </blockquote>
@@ -275,7 +266,7 @@ Remark. If edges are already sorted, order of growth is E log* V.
 <blockquote>
 <p>松弛术语来自：用一根橡皮筋沿着连接两个顶点的路径紧紧展开的比喻：放松一条边类似将橡皮筋转移到一条更短的路径上，从而缓解了橡皮筋的压力。</p>
 </blockquote>
-<p>3、最短路径算法理论基础</p>
+<p>3、最短路径算法理论基础 —— 最优性条件（Optimality condition)</p>
 <p><img src="optimality condition pf.png" alt=""></p>
 <p>4、通用算法</p>
 <p><img src="Generic SP algorithm.png" alt=""></p>
@@ -290,12 +281,29 @@ Remark. If edges are already sorted, order of growth is E log* V.
 </ol>
 <p><img src="Dijkstra.png" alt=""><br><img src="Dijkstra2.png" alt=""></p>
 <blockquote>
+<p>Proposition. Dijkstra’s algorithm computes a SPT in any edge-weighted digraph with nonnegative weights.<br>Pf.<br>・Each edge e = v→w is relaxed exactly once (when v is relaxed),leaving distTo[w] ≤ distTo[v] + e.weight().<br>・Inequality holds until algorithm terminates because:<br>– distTo[w] cannot increase  <strong>&lt;– distTo[] values are monotone decreasing</strong><br>– distTo[v] will not change  <strong>&lt;– we choose lowest distTo[] value at each step (and edge weights are nonnegative)</strong><br>・Thus, upon termination, shortest-paths optimality conditions hold.</p>
+</blockquote>
+<blockquote>
 <p>Dijkstra’s algorithm seem familiar?<br>・Prim’s algorithm is essentially the same algorithm.<br>・Both are in a family of algorithms that compute a graph’s spanning tree.</p>
 </blockquote>
 <blockquote>
 <p>Main distinction: Rule used to choose next vertex for the tree.<br>・Prim’s: Closest vertex to the tree (via an undirected edge).<br>・Dijkstra’s: Closest vertex to the source (via a directed path).</p>
 </blockquote>
-<h4 id="按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）"><a href="#按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）" class="headerlink" title="按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）"></a>按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）</h4><h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4>
+<h4 id="按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）"><a href="#按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）" class="headerlink" title="按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）"></a>按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）</h4><blockquote>
+<p>Proposition. Topological sort algorithm computes SPT in any edgeweighted DAG in time proportional to E + V.<br>Pf.<br>・Each edge e = v→w is relaxed exactly once (when v is relaxed),leaving distTo[w] ≤ distTo[v] + e.weight().<br>・Inequality holds until algorithm terminates because:<br>– distTo[w] cannot increase  <strong>&lt;– distTo[] values are monotone decreasing</strong><br>– distTo[v] will not change  <strong>&lt;– because of topological order, no edge pointing to v will be relaxed after v is relaxed</strong><br>・Thus, upon termination, shortest-paths optimality conditions hold</p>
+</blockquote>
+<pre><code>总结 Dijkstra算法 和 拓扑排序算法 可以解决单源最短路径的证明：
+两个算法都满足了最短路径的最优性条件。他们用不同方式保证了：如果v是从起点可达的，所有 v-&gt;w 的边只会被放松一次，不等式 distTo[w] ≤ distTo[v] + e.weight() 成立。
+保证了 distTo[v] 是不会变化的：
+1. 权重非负的情况下，Dijkstra算法保证：从起始顶点的最小权重边开始放松，之后的放松操作都不可能使任何 distTo[]小于 distTo[v]。也就是 distTo[放松了的顶点] 不会再变化（已经是最小权重了嘛）；
+2. 无环的时候，拓扑顺序保证：放松了的顶点，后面再没有顶点指向它，也就是放松的顶点不会再变化（都没机会改变了嘛）。
+因此放松 v-&gt;w 的边时，要么放松无效（ 原有的 distTo[w] ≤ distTo[v] + e.weight() ）；
+要么放松成功（ 原有的 distTo[w] &gt; distTo[v] + e.weight()， 放松后 distTo[w] = distTo[v] + e.weight()）
+</code></pre><p>两个子问题<br>1、无环加权有向图的最长路径</p>
+<p>Formulate as a shortest paths problem in edge-weighted DAGs.<br>・Negate all weights.<br>・Find shortest paths.<br>・Negate weights in result.</p>
+<p>应用：并行任务调度（Parallel job scheduling）</p>
+<p>2、关键路径方法 （Critical path method)</p>
+<h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4>
       
 
       

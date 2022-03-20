@@ -181,7 +181,7 @@ var _hmt = _hmt || [];
 <p><strong>分析确定状态转移方程</strong></p>
 <p>爬楼梯可以选择爬一阶或两阶，说明了当前位置 n 可能来自 n-1 或 n-2，是不是和斐波那契数列很像？</p>
 <p>那么当前位置的最小花费，就是 n-1 和 n-2 中的最小花费，加上当前位置的花费。得到：<br><strong>f(n) = min( f(n-1), f(n-2) ) + cost[n]</strong></p>
-<p><code>// Recursive Top Down - O(2^n) Time Limit Exceeded</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code><br><code>private int minCost(int[] cost, int n) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>return cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code></p>
+<p><code>// Recursive Top Down - O(2^n) Time Limit Exceeded</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code><br><code>int minCost(int[] cost, int n) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>return cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code></p>
 <p>写出递推公式，再处理好边界问题（n&gt;=2）其实答案就出来了。但这样的代码通常会超时，因为很多子问题被重复计算（时间效率极差）。看看下图就可以明白。因此，画递归树是非常重要的，许多题目可以利用递归树求解，后续会有实例。</p>
 <p><img src="climb stairs.jpg" width="300" height="300"></p>
 <p><strong>使用缓存</strong></p>

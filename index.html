@@ -168,7 +168,7 @@ var _hmt = _hmt || [];
 <h3 id="二、分析"><a href="#二、分析" class="headerlink" title="二、分析"></a>二、分析</h3><p>以上题型都有几个<strong>共同点</strong></p>
 <p>1、大问题可分解为小问题，有最小可行解，存在重复子问题</p>
 <blockquote>
-<p>【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】</p>
+<p>【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：<br>斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】</p>
 </blockquote>
 <p>2、小问题的每一步本质都是“选or不选”的问题</p>
 <p><strong>难点</strong>：动态规划类问题难在：</p>
@@ -177,22 +177,7 @@ var _hmt = _hmt || [];
 <p><strong>易错点</strong>：处理边界问题</p>
 <pre><code>接下来我们从例题中感受，特别是“选or不选”的问题，为解题关键思想。而“优化内存”是提分所在。
 </code></pre><h3 id="三、第一类：单序列问题"><a href="#三、第一类：单序列问题" class="headerlink" title="三、第一类：单序列问题"></a>三、第一类：单序列问题</h3><blockquote>
-<p><a href="https://leetcode.com/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener">https://leetcode.com/problems/min-cost-climbing-stairs/</a></p>
-</blockquote>
-<blockquote>
-<p>剑指 Offer II 088. 爬楼梯的最少成本<br>数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。</p>
-</blockquote>
-<blockquote>
-<p>每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。</p>
-</blockquote>
-<blockquote>
-<p>请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。</p>
-</blockquote>
-<blockquote>
-<p>示例：</p>
-</blockquote>
-<blockquote>
-<p>输入：cost = [10, 15, 20]<br>输出：15<br>解释：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。</p>
+<p><a href="https://leetcode.com/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener">https://leetcode.com/problems/min-cost-climbing-stairs/</a><br>剑指 Offer II 088. 爬楼梯的最少成本<br>数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。<br>每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。<br>请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>示例：<br>输入：cost = [10, 15, 20]<br>输出：15<br>解释：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。</p>
 </blockquote>
 <p><strong>分析确定状态转移方程</strong></p>
 <p>爬楼梯可以选择爬一阶或两阶，说明了当前位置 n 可能来自 n-1 或 n-2，是不是和斐波那契数列很像？</p>

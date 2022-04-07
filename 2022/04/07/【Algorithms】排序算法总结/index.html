@@ -6,19 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://homyeung.github.io">
-  <title>Hello Blog | homYang&#39;s blog</title>
+  <title>【Algorithms】排序算法总结 | homYang&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="拖延症晚期患者终于搭建好自己的博客。 其实只需要花一下午时间，配置Github Page，安装Hexo和yilia，设置自己喜欢的主题样式。多方考量后决定是valine评论系统。 2019努力写blog鸭٩(˃̶͈̀௰˂̶͈́)و。">
+  <meta name="description" content="各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊 以下排序算法总结的先后次序，根据使用（面试）频率从高到低排 快速排序（不稳定，nlogn，in-place）1、基本思想：选取start作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello Blog">
-<meta property="og:url" content="https://homyeung.github.io/2019/02/06/hello-blog/index.html">
+<meta property="og:title" content="【Algorithms】排序算法总结">
+<meta property="og:url" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/index.html">
 <meta property="og:site_name" content="homYang&#39;s blog">
-<meta property="og:description" content="拖延症晚期患者终于搭建好自己的博客。 其实只需要花一下午时间，配置Github Page，安装Hexo和yilia，设置自己喜欢的主题样式。多方考量后决定是valine评论系统。 2019努力写blog鸭٩(˃̶͈̀௰˂̶͈́)و。">
+<meta property="og:description" content="各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊 以下排序算法总结的先后次序，根据使用（面试）频率从高到低排 快速排序（不稳定，nlogn，in-place）1、基本思想：选取start作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition(">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-08T10:23:06.282Z">
+<meta property="og:image" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/quicksort.jpg">
+<meta property="og:image" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/quickselect.jpg">
+<meta property="og:updated_time" content="2022-04-07T16:40:20.202Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello Blog">
-<meta name="twitter:description" content="拖延症晚期患者终于搭建好自己的博客。 其实只需要花一下午时间，配置Github Page，安装Hexo和yilia，设置自己喜欢的主题样式。多方考量后决定是valine评论系统。 2019努力写blog鸭٩(˃̶͈̀௰˂̶͈́)و。">
+<meta name="twitter:title" content="【Algorithms】排序算法总结">
+<meta name="twitter:description" content="各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊 以下排序算法总结的先后次序，根据使用（面试）频率从高到低排 快速排序（不稳定，nlogn，in-place）1、基本思想：选取start作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition(">
+<meta name="twitter:image" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/quicksort.jpg">
   
   
     <link rel="icon" href="/assets/h.jpg">
@@ -146,29 +149,39 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-blog" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-【Algorithms】排序算法总结" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello Blog
+      【Algorithms】排序算法总结
     </h1>
   
 
         
-        <a href="/2019/02/06/hello-blog/" class="archive-article-date">
-  	<time datetime="2019-02-06T08:27:07.466Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-06</time>
+        <a href="/2022/04/07/【Algorithms】排序算法总结/" class="archive-article-date">
+  	<time datetime="2022-04-07T04:17:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>拖延症晚期患者终于搭建好自己的博客。</p>
-<p>其实只需要花一下午时间，配置Github Page，安装Hexo和yilia，设置自己喜欢的主题样式。多方考量后决定是valine评论系统。</p>
-<p>2019努力写blog鸭٩(˃̶͈̀௰˂̶͈́)و。</p>
+        <pre><code>各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊
+</code></pre><p>以下排序算法总结的先后次序，根据使用（面试）频率从高到低排</p>
+<h3 id="快速排序（不稳定，nlogn，in-place）"><a href="#快速排序（不稳定，nlogn，in-place）" class="headerlink" title="快速排序（不稳定，nlogn，in-place）"></a>快速排序（不稳定，nlogn，in-place）</h3><p>1、基本思想：选取<code>start</code>作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition()，分别对基准两边进行快速排序。  </p>
+<p>2、复杂度：<br>· nlogn<br>· 最坏情况即数据有序的情况下，每次分区都只分出一个1和n-1，时间复杂度n^2。   </p>
+<p>3、partition() 具体实现：<code>i</code>从start+1出发，指向大于基准的数据位置；<code>j</code>从end出发，指向小于基准的数据位置。交换<code>i</code>和<code>j</code>指向的数据。重复以上动作，直到<code>i&gt;=j</code>。<strong>最后 j 指向的是左边区域最后一个小于基准的数，所以交换 start 和 j 位置的数据，实现了左小右大的局面。start &gt;= end 时不再进入 partition()</strong>。注意边界条件！！    </p>
+<p>4、优化：<br>· 排序前先shuffle待排序数组<br>· 哨兵。去掉边界条件的判断<br>· 小数组切换到插入排序<br>· 三取样切分  </p>
+<p><img src="quicksort.jpg" width="700" height="525">   </p>
+<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><p>代码<code>j==lo</code>的判断其实是冗余的，因为只有<code>a[j]&gt;a[lo]</code>时，<code>j</code>才会递减。当<code>j</code>到达<code>lo</code>时必定停止移动。<br>若想去掉<code>i==hi</code>到判断，需要在<code>shuffle</code>后把数组最大值放到<code>hi</code>位置。<code>i</code>从<code>lo</code>出发时不必担心跑出<code>hi</code>，因为<code>i</code>只有比基准小才会递增，所以遇到<code>hi</code>时<code>i</code>必定停止移动。<br>子数组处理：右边部分的第一个值可以作为左边部分的<code>hi</code></p>
+<h4 id="常见应用：find-top-k"><a href="#常见应用：find-top-k" class="headerlink" title="常见应用：find top k"></a>常见应用：find top k</h4><p><img src="quickselect.jpg" width="700" height="525"></p>
+<h3 id="归并排序（稳定，nlogn）"><a href="#归并排序（稳定，nlogn）" class="headerlink" title="归并排序（稳定，nlogn）"></a>归并排序（稳定，nlogn）</h3><p>1、基本思想：如何排序一个数组，假设数组分为左右两个子数组，且子数组已排好序，那么有序合并两个子数组，任务就完成了。这个假设中，两个子数组如何有序的问题跟原始问题一致。因此可以递归解决子问题，即<strong>分别排序左右子数组，合并两个子数组</strong>。    </p>
+<p><code>void merge(const vector&lt;int&gt;&amp; a, int lo, int mid, int hi) { // merge a[lo..mid] and a[mid+1..hi]</code><br><code>&amp;emsp;&amp;emsp;vector&lt;int&gt; aux(a);</code><br><code>&amp;emsp;&amp;emsp;int i = lo; int j = mid+1;</code><br><code>&amp;emsp;&amp;emsp;for(int k = 0; k &lt;= hi; ++k) {</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;if(i &gt; mid) aux[k] = a[j++];</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;else if(j &gt; hi)  aux[k] = a[i++];</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;else if(a[i] &lt; a[j]) aux[k] = a[i++];</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;else aux[k] = a[j++];</code><br><code>&amp;emsp;&amp;emsp;}</code><br><code>}</code>    </p>
+<p>2、递归（自顶向下）方法，空间复杂度除了辅助数组外，还有logn的调用栈深度    </p>
+<p>3、自底向上方法可以节约调用栈的空间消耗。每次两两归并，再四四归并，再八八归并，一直下去。</p>
 
       
 
@@ -227,7 +240,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://homyeung.github.io/2019/02/06/hello-blog/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -241,18 +254,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2019/02/09/PE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          PE
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/02/06/hello-world.md-bak/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【Algorithms】我对动态规划的理解Ⅰ</div>
       <i class="icon-circle-right"></i>
     </a>
   

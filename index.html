@@ -144,6 +144,81 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-【Algorithms】排序算法总结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/04/07/【Algorithms】排序算法总结/">【Algorithms】排序算法总结</a>
+    </h1>
+  
+
+        
+        <a href="/2022/04/07/【Algorithms】排序算法总结/" class="archive-article-date">
+  	<time datetime="2022-04-07T04:17:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊
+</code></pre><p>以下排序算法总结的先后次序，根据使用（面试）频率从高到低排</p>
+<h3 id="快速排序（不稳定，nlogn，in-place）"><a href="#快速排序（不稳定，nlogn，in-place）" class="headerlink" title="快速排序（不稳定，nlogn，in-place）"></a>快速排序（不稳定，nlogn，in-place）</h3><p>1、基本思想：选取<code>start</code>作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition()，分别对基准两边进行快速排序。  </p>
+<p>2、复杂度：<br>· nlogn<br>· 最坏情况即数据有序的情况下，每次分区都只分出一个1和n-1，时间复杂度n^2。   </p>
+<p>3、partition() 具体实现：<code>i</code>从start+1出发，指向大于基准的数据位置；<code>j</code>从end出发，指向小于基准的数据位置。交换<code>i</code>和<code>j</code>指向的数据。重复以上动作，直到<code>i&gt;=j</code>。<strong>最后 j 指向的是左边区域最后一个小于基准的数，所以交换 start 和 j 位置的数据，实现了左小右大的局面。start &gt;= end 时不再进入 partition()</strong>。注意边界条件！！    </p>
+<p>4、优化：<br>· 排序前先shuffle待排序数组<br>· 哨兵。去掉边界条件的判断<br>· 小数组切换到插入排序<br>· 三取样切分  </p>
+<p><img src="quicksort.jpg" width="700" height="525">   </p>
+<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><p>代码<code>j==lo</code>的判断其实是冗余的，因为只有<code>a[j]&gt;a[lo]</code>时，<code>j</code>才会递减。当<code>j</code>到达<code>lo</code>时必定停止移动。<br>若想去掉<code>i==hi</code>到判断，需要在<code>shuffle</code>后把数组最大值放到<code>hi</code>位置。<code>i</code>从<code>lo</code>出发时不必担心跑出<code>hi</code>，因为<code>i</code>只有比基准小才会递增，所以遇到<code>hi</code>时<code>i</code>必定停止移动。<br>子数组处理：右边部分的第一个值可以作为左边部分的<code>hi</code></p>
+<h4 id="常见应用：find-top-k"><a href="#常见应用：find-top-k" class="headerlink" title="常见应用：find top k"></a>常见应用：find top k</h4><p><img src="quickselect.jpg" width="700" height="525"></p>
+<h3 id="归并排序（稳定，nlogn）"><a href="#归并排序（稳定，nlogn）" class="headerlink" title="归并排序（稳定，nlogn）"></a>归并排序（稳定，nlogn）</h3><p>1、基本思想：如何排序一个数组，假设数组分为左右两个子数组，且子数组已排好序，那么有序合并两个子数组，任务就完成了。这个假设中，两个子数组如何有序的问题跟原始问题一致。因此可以递归解决子问题，即<strong>分别排序左右子数组，合并两个子数组</strong>。    </p>
+<p><code>void merge(const vector&lt;int&gt;&amp; a, int lo, int mid, int hi) { // merge a[lo..mid] and a[mid+1..hi]</code><br><code>&amp;emsp;&amp;emsp;vector&lt;int&gt; aux(a);</code><br><code>&amp;emsp;&amp;emsp;int i = lo; int j = mid+1;</code><br><code>&amp;emsp;&amp;emsp;for(int k = 0; k &lt;= hi; ++k) {</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;if(i &gt; mid) aux[k] = a[j++];</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;else if(j &gt; hi)  aux[k] = a[i++];</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;else if(a[i] &lt; a[j]) aux[k] = a[i++];</code><br><code>&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;else aux[k] = a[j++];</code><br><code>&amp;emsp;&amp;emsp;}</code><br><code>}</code>    </p>
+<p>2、递归（自顶向下）方法，空间复杂度除了辅助数组外，还有logn的调用栈深度    </p>
+<p>3、自底向上方法可以节约调用栈的空间消耗。每次两两归并，再四四归并，再八八归并，一直下去。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/04/07/【Algorithms】排序算法总结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="【Algorithms】-【Algorithms】我对动态规划的理解Ⅰ" class="article article-type-【Algorithms】  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -234,19 +309,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="[c++]-一些我总是忘记的知识" class="article article-type-[c++]  article-index" itemscope="" itemprop="blogPost">
+    <article id="【c++】-【c++】一些我总是忘记的知识" class="article article-type-【c++】  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/03/15/一些我总是忘记的知识/">一些我总是忘记的知识</a>
+      <a class="article-title" href="/2022/03/15/【c++】一些我总是忘记的知识/">【c++】一些我总是忘记的知识</a>
     </h1>
   
 
         
-        <a href="/2022/03/15/一些我总是忘记的知识/" class="archive-article-date">
+        <a href="/2022/03/15/【c++】一些我总是忘记的知识/" class="archive-article-date">
   	<time datetime="2022-03-15T01:52:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-15</time>
 </a>
         
@@ -263,8 +338,28 @@ var _hmt = _hmt || [];
 </ul>
 <p>2、align</p>
 <p>3、重载overload 和 重写override</p>
-<p>4、static的各种用途</p>
+<ul>
+<li>由于函数签名不包括返回值，所以重载不需要关心返回值。重载的要求是：参数个数、参数类型、是否const</li>
+</ul>
+<p>4、static 的各种用途</p>
+<ul>
+<li>普通变量：利用只初始化一次的特性，可用于控制函数的调用次数。</li>
+<li>类成员变量：static 声明的成员不绑定到类实例，一个类只有一份，不因多个对象而产生多份拷贝。需要在类外初始化，因为static初始化时机在程序 startup 过程，main执行前。</li>
+<li>类成员函数：同样不绑定到类实例，由于没有 this 指针，无法访问普通成员变量，只能访问 static 成员变量。</li>
+<li>单例模式：只构造一次实例</li>
+<li>需要小心 static 变量在多线程下的使用（待续）</li>
+</ul>
 <p>5、const的各种用途</p>
+<ul>
+<li>编译期控制const修饰的变量为“常量”</li>
+<li>修饰类型<ul>
+<li>指针常量</li>
+<li>常量指针</li>
+<li>常引用</li>
+</ul>
+</li>
+<li>const成员函数</li>
+</ul>
 <p>6、三种类型转换</p>
 <hr>
 <h4 id="没掌握的知识点"><a href="#没掌握的知识点" class="headerlink" title="没掌握的知识点"></a>没掌握的知识点</h4><p>1、转换函数 conversion function</p>
@@ -272,7 +367,8 @@ var _hmt = _hmt || [];
 <p>3、pointer-like classes</p>
 <p>· 智能指针</p>
 <p>· 迭代器 </p>
-<p>4、function-like classes 仿函数</p>
+<p>4、functors (function-like classes 仿函数</p>
+<p>5、模版<br>· 类模版<br>· 函数模版<br>· 成员模版    </p>
 <p>4、虚函数的底层原理</p>
 <p>4、智能指针</p>
 <p>右值 lambda</p>
@@ -309,7 +405,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2022/03/15/一些我总是忘记的知识/">展开全文 >></a>
+          <a class="article-more-a" href="/2022/03/15/【c++】一些我总是忘记的知识/">展开全文 >></a>
         </p>
       
 
@@ -862,6 +958,71 @@ Remark. If edges are already sorted, order of growth is E log* V.
 
 
   
+    <article id="post-hello-blog" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/06/hello-blog/">Hello Blog</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/06/hello-blog/" class="archive-article-date">
+  	<time datetime="2019-02-06T08:27:07.466Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>拖延症晚期患者终于搭建好自己的博客。</p>
+<p>其实只需要花一下午时间，配置Github Page，安装Hexo和yilia，设置自己喜欢的主题样式。多方考量后决定是valine评论系统。</p>
+<p>2019努力写blog鸭٩(˃̶͈̀௰˂̶͈́)و。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/06/hello-blog/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world.md-bak" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -904,71 +1065,6 @@ Remark. If edges are already sorted, order of growth is E log* V.
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/02/06/hello-world.md-bak/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-blog" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/06/hello-blog/">Hello Blog</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/06/hello-blog/" class="archive-article-date">
-  	<time datetime="2019-02-06T08:27:07.466Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>拖延症晚期患者终于搭建好自己的博客。</p>
-<p>其实只需要花一下午时间，配置Github Page，安装Hexo和yilia，设置自己喜欢的主题样式。多方考量后决定是valine评论系统。</p>
-<p>2019努力写blog鸭٩(˃̶͈̀௰˂̶͈́)و。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/06/hello-blog/">展开全文 >></a>
         </p>
       
 

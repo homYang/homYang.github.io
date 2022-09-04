@@ -178,38 +178,32 @@ var _hmt = _hmt || [];
 <li>保持左值/右值属性</li>
 </ol>
 <p><strong>先说结论：右值引用可以满足以上两点</strong></p>
-<h4 id="1-如何保持const属性：引用类型"><a href="#1-如何保持const属性：引用类型" class="headerlink" title="1. 如何保持const属性：引用类型"></a>1. 如何保持const属性：引用类型</h4><pre><code>对于引用类型，const作用在底层。
+<h4 id="1-如何保持const属性：引用类型"><a href="#1-如何保持const属性：引用类型" class="headerlink" title="1. 如何保持const属性：引用类型"></a>1. 如何保持const属性：引用类型</h4><pre><code>定义：对于引用类型，const作用在底层。
 底层 const 对象执行拷贝时，拷入或拷出的对象都必须具有底层const特性    
 </code></pre><blockquote>
 <p><code>int i = 1;</code><br><code>int* const p1 = &amp;i;</code> // p1是顶层const<br><code>int *j1 = p1;</code> // ok<br><code>const int *p2 = &amp;i;</code> // p2是底层const<br><code>int* j2 = p2;</code> // error : ‘initializing’: cannot convert from ‘const int <em>‘ to ‘int </em>‘   </p>
 </blockquote>
-<h4 id="2-如何保持左值-右值属性：右值引用参数-引用折叠规则"><a href="#2-如何保持左值-右值属性：右值引用参数-引用折叠规则" class="headerlink" title="2. 如何保持左值/右值属性：右值引用参数 + 引用折叠规则"></a>2. 如何保持左值/右值属性：右值引用参数 + 引用折叠规则</h4><pre><code>c++ 标准为右值引用定义了两个例外的规则：   
-</code></pre><ol>
-<li><p>模版实参推导中，右值引用函数参数传入左值时，参数类型将被推导为左值引用。    </p>
-<blockquote>
-<p>例：当参数的模版类型是 <code>T&amp;&amp;</code> 时，传入 <code>int</code> 实参时， <code>T</code> 被推导为 <code>int&amp;</code>   </p>
-</blockquote>
-</li>
-<li><p>引用折叠    </p>
-<ul>
-<li>从第一点的例子得到， <code>T&amp;&amp;</code> 将被推导为 <code>int&amp; &amp;&amp;</code> ，我们间接得到了引用的引用，这些引用形成“折叠”，此时可以应用第二个例外规则：<ul>
+<h4 id="2-如何保持左值-右值属性：右值引用参数-引用折叠规则"><a href="#2-如何保持左值-右值属性：右值引用参数-引用折叠规则" class="headerlink" title="2. 如何保持左值/右值属性：右值引用参数 + 引用折叠规则"></a>2. 如何保持左值/右值属性：右值引用参数 + 引用折叠规则</h4><p>c++ 标准为右值引用定义了两个例外的规则：   </p>
+<pre><code>1、模版实参推导中，右值引用函数参数传入左值时，参数类型将被推导为左值引用。    
+</code></pre><p>例：当参数的模版类型是 <code>T&amp;&amp;</code> 时，传入 <code>int</code> 实参时， <code>T</code> 被推导为 <code>int&amp;</code>   </p>
+<pre><code>2、引用折叠        
+</code></pre><ul>
+<li>从第一点的例子得到， <code>T&amp;&amp;</code> 将被推导为 <code>int&amp; &amp;&amp;</code> ，我们间接得到了引用的引用，这些引用形成“折叠”，此时可以应用第二个例外规则：    <ul>
 <li><code>T&amp; &amp;、T&amp; &amp;&amp;、T&amp;&amp; &amp;</code> 将被折叠为 <code>T&amp;</code></li>
 <li><code>T&amp;&amp; &amp;&amp;</code> 折叠为 <code>T&amp;&amp;</code></li>
 </ul>
 </li>
 </ul>
-</li>
-</ol>
-<p><strong>这两个规则暗示，我们可以把任意类型实参传给 <code>T&amp;&amp;</code> 的函数参数</strong>，且传入左值时将被实例化为左值引用。<br>至此，我们保持了实参的const属性和左值/右值属性。函数定义更新为：   </p>
+<p><strong>这两个规则暗示，我们可以把任意类型实参传给 <code>T&amp;&amp;</code> 的函数参数</strong>，且传入左值时将被实例化为左值引用。<br>至此，我们保持了实参的 <code>const</code> 属性和左值/右值属性。函数定义更新为：   </p>
 <p><code>template &lt;typename F, typename T1, typename T2&gt;</code><br><code>void flip2(F f, T1&amp;&amp; t1, T2&amp;&amp; t2)</code><br><code>{</code><br>&emsp;&emsp;<code>f(t1, t2);</code><br><code>}</code>  </p>
 <p>此时调用：<code>flip2(f, 2333, j);</code>  <code>j</code> 传递给 <code>t2</code> 一个左值引用， <code>j</code> 将绑定到 <code>t2</code> 上。<code>f</code> 中引用参数 <code>v2</code> 绑定到 <code>t2</code>， 因此对 <code>v2</code> 对修改也会影响到 <code>j</code>。    </p>
 <hr>
 <p><strong>我们解决了实参为左值引用的问题，但其实 <code>flip2</code> 在调用接受右值参数的函数时会出现问题，例如：</strong>    </p>
 <p><code>void g(int &amp;&amp;i, int &amp;j)</code><br><code>{</code><br>&emsp;&emsp;<code>cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; j &lt;&lt; endl;</code><br><code>}</code>    </p>
 <p>&emsp;<code>flip2(g, 233, j);</code> // 错误：不能从一个左值实例化为 int&amp;&amp; </p>
-<pre><code>int &amp;&amp;ii = 233; // ii 是左值  
-在调用 g 的时候，实际是把 flip2 实例化的 ii 传递给参数 i
-</code></pre><h2 id="3、在调用中使用-std-forward-保持类型信息"><a href="#3、在调用中使用-std-forward-保持类型信息" class="headerlink" title="3、在调用中使用 std::forward 保持类型信息"></a>3、在调用中使用 std::forward 保持类型信息</h2><pre><code>forward 返回显式实参类型的右值引用。即，forward&lt;T&gt; 的返回类型是 T&amp;&amp;    
+<p>int &amp;&amp;ii = 233;  // ii 是左值<br>在调用 g 的时候，实际是把 flip2 实例化的 ii 传递给参数 i</p>
+<p>接下来将解决这个问题。</p>
+<h2 id="3、在调用中使用-std-forward-保持类型信息"><a href="#3、在调用中使用-std-forward-保持类型信息" class="headerlink" title="3、在调用中使用 std::forward 保持类型信息"></a>3、在调用中使用 std::forward 保持类型信息</h2><pre><code>forward 返回显式实参类型的右值引用。即，forward&lt;T&gt; 的返回类型是 T&amp;&amp;    
 类似 move，forward 定义在头文件 utility 中。与 move 不同，forward 必须通过显式模版实参调用
 </code></pre><p>使用 forward， 我们再次重写：    </p>
 <p><code>template &lt;typename F, typename T1, typename T2&gt;</code><br><code>void flip(F f, T1&amp;&amp; t1, T2&amp;&amp; t2)</code><br><code>{</code><br>&emsp;&emsp;<code>f(std::forward&lt;T1&gt;(t1), std::forward&lt;T2&gt;(t2));</code><br><code>}</code>  </p>
@@ -1150,19 +1144,19 @@ Remark. If edges are already sorted, order of growth is E log* V.
 
 
   
-    <article id="post-hello-world.md-bak" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-hello-blog" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/06/hello-world.md-bak/">Hello World</a>
+      <a class="article-title" href="/2019/02/06/hello-blog/">Hello Blog</a>
     </h1>
   
 
         
-        <a href="/2019/02/06/hello-world.md-bak/" class="archive-article-date">
+        <a href="/2019/02/06/hello-blog/" class="archive-article-date">
   	<time datetime="2019-02-06T08:27:07.466Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-06</time>
 </a>
         
@@ -1170,15 +1164,9 @@ Remark. If edges are already sorted, order of growth is E log* V.
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>拖延症晚期患者终于搭建好自己的博客。</p>
+<p>其实只需要花一下午时间，配置Github Page，安装Hexo和yilia，设置自己喜欢的主题样式。多方考量后决定是valine评论系统。</p>
+<p>2019努力写blog鸭٩(˃̶͈̀௰˂̶͈́)و。</p>
 
       
 
@@ -1191,7 +1179,7 @@ Remark. If edges are already sorted, order of growth is E log* V.
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/06/hello-world.md-bak/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/02/06/hello-blog/">展开全文 >></a>
         </p>
       
 

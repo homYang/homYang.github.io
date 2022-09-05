@@ -167,7 +167,7 @@ var _hmt = _hmt || [];
         <p>本文是笔者通过阅读 C++ Primer 获得的感悟：一直以来对 c++11 这几个新特性敬而远之，觉得它们高深莫测，理解它们需要极高的学习成本。实际上是心理作祟。在耐心看完书中相关章节后，发现这几个知识点应用起来是环环相扣，兴奋之余想记录下我的知识串联历程。</p>
 <h3 id="确定目标：让我们一起实现一个转发函数"><a href="#确定目标：让我们一起实现一个转发函数" class="headerlink" title="确定目标：让我们一起实现一个转发函数"></a>确定目标：让我们一起实现一个转发函数</h3><pre><code>转发函数是什么？    
 转发函数可以把接收的实参原封不动地转发给其他函数。（原封不动指转发实参的所有性质，包括 const、左值或右值）
-</code></pre><h2 id="1、我们先从最基础做起"><a href="#1、我们先从最基础做起" class="headerlink" title="1、我们先从最基础做起"></a>1、我们先从最基础做起</h2><p>定义如下模版函数，接受可调用表达式 <code>f</code> 和两个实参，然后调用给定的 <code>f</code> 并把两个实参传递给它<br><code>template &lt;typename F, typename T1, typename T2&gt;</code><br><code>void flip1(F f, T1 t1, T2 t2)</code><br><code>{</code><br>&emsp;&emsp;<code>f(t1, t2);</code><br><code>}</code>    </p>
+</code></pre><h2 id="1、我们先从最基础做起"><a href="#1、我们先从最基础做起" class="headerlink" title="1、我们先从最基础做起"></a>1、我们先从最基础做起</h2><p>定义如下模版函数，接受可调用表达式 <code>f</code> 和两个实参，然后调用给定的 <code>f</code> 并把两个实参传递给它<br><code>template &lt;typename F, typename T1, typename T2&gt;</code><br><code>void fun1(F f, T1 t1, T2 t2)</code><br><code>{</code><br>&emsp;&emsp;<code>f(t1, t2);</code><br><code>}</code>    </p>
         
       
 
@@ -242,13 +242,7 @@ var _hmt = _hmt || [];
 <li>性能要看看    </li>
 <li>这种方法限制了槽函数名. 有些槽函数不是这个名的还是需要自己connect。<br>再有一个, 时机问题. qt这一层, 有一套父子关系机制. 调用这个函数的时候, 如果那个东西还不在它的家族里面, 那么后面进入家族的时候 应该也不会自动connect上。  </li>
 </ol>
-<p><strong>作业1</strong>：写个继承了QObject的类加深一下印象. 类就实现按一下你刚才搞的东西的按钮的话 能弹个提示框出来. 弹框的话 调QMessageBox的静态方法随便搞个就行，需要手动connect的那种。<br>小要求    </p>
-<ol>
-<li>按两个按钮, 弹不同的框, 不同的框的connect需要用不同的使用方法, 一种是SIGNAL(), 另一种是直接函数名    </li>
-<li>槽函数需要至少一个参数  </li>
-</ol>
-<p><strong>作业2</strong>：搞个qt界面或控制台程序, 每输入一个数字回车之后 就跟上一个数字累加. 从0开始. 加法需要在线程里面完成。输入exit后能正常退出程序。线程资源也要管理好：别主线程要退了 加法线程还在运行</p>
-
+        
       
 
       
@@ -315,14 +309,7 @@ var _hmt = _hmt || [];
 <h3 id="快速排序（不稳定，nlogn，in-place）"><a href="#快速排序（不稳定，nlogn，in-place）" class="headerlink" title="快速排序（不稳定，nlogn，in-place）"></a>快速排序（不稳定，nlogn，in-place）</h3><p>1、基本思想：选取<code>start</code>作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition()，分别对基准两边进行快速排序。  </p>
 <p>2、复杂度：<br>· nlogn<br>· 最坏情况即数据有序的情况下，每次分区都只分出一个1和n-1，时间复杂度n^2。   </p>
 <p>3、partition() 具体实现：<code>i</code>从start+1出发，指向大于基准的数据位置；<code>j</code>从end出发，指向小于基准的数据位置。交换<code>i</code>和<code>j</code>指向的数据。重复以上动作，直到<code>i&gt;=j</code>。<strong>最后 j 指向的是左边区域最后一个小于基准的数，所以交换 start 和 j 位置的数据，实现了左小右大的局面。start &gt;= end 时不再进入 partition()</strong>。注意边界条件！！    </p>
-<p>4、优化：<br>· 排序前先shuffle待排序数组<br>· 哨兵。去掉边界条件的判断<br>· 小数组切换到插入排序<br>· 三取样切分  </p>
-<p><img src="quicksort.jpg" width="700" height="525">   </p>
-<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><p>代码<code>j==lo</code>的判断其实是冗余的，因为只有<code>a[j]&gt;a[lo]</code>时，<code>j</code>才会递减。当<code>j</code>到达<code>lo</code>时必定停止移动。<br>若想去掉<code>i==hi</code>到判断，需要在<code>shuffle</code>后把数组最大值放到<code>hi</code>位置。<code>i</code>从<code>lo</code>出发时不必担心跑出<code>hi</code>，因为<code>i</code>只有比基准小才会递增，所以遇到<code>hi</code>时<code>i</code>必定停止移动。<br>子数组处理：右边部分的第一个值可以作为左边部分的<code>hi</code></p>
-<h4 id="常见应用：find-top-k"><a href="#常见应用：find-top-k" class="headerlink" title="常见应用：find top k"></a>常见应用：find top k</h4><p><img src="quickselect.jpg" width="700" height="525"></p>
-<h3 id="归并排序（稳定，nlogn）"><a href="#归并排序（稳定，nlogn）" class="headerlink" title="归并排序（稳定，nlogn）"></a>归并排序（稳定，nlogn）</h3><p>1、基本思想：如何排序一个数组，假设数组分为左右两个子数组，且子数组已排好序，那么有序合并两个子数组，任务就完成了。这个假设中，两个子数组如何有序的问题跟原始问题一致。因此可以递归解决子问题，即<strong>分别排序左右子数组，合并两个子数组</strong>。<br><code>// merge a[lo..mid] and a[mid+1..hi]</code><br><code>void merge(const vector&lt;int&gt;&amp; a, int lo, int mid, int hi) {</code><br>&emsp;&emsp;<code>vector&lt;int&gt; aux(a);</code><br>&emsp;&emsp;<code>int i = lo; int j = mid+1;</code><br>&emsp;&emsp;<code>for(int k = 0; k &lt;= hi; ++k) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>if(i &gt; mid) aux[k] = a[j++];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else if(j &gt; hi)  aux[k] = a[i++];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else if(a[i] &lt; a[j]) aux[k] = a[i++];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else aux[k] = a[j++];</code><br>&emsp;&emsp;<code>}</code><br><code>}</code>    </p>
-<p>2、递归（自顶向下）方法，空间复杂度除了辅助数组外，还有<code>logn</code>的调用栈深度    </p>
-<p>3、自底向上方法可以节约调用栈的空间消耗。每次两两归并，再四四归并，再八八归并，一直下去。</p>
-
+        
       
 
       
@@ -391,28 +378,7 @@ var _hmt = _hmt || [];
 <p>【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：<br>斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】</p>
 </blockquote>
 <p>2、小问题的每一步本质都是“选or不选”的问题</p>
-<p><strong>难点</strong>：动态规划类问题难在：</p>
-<p>（1）找“大小问题之间的关系式”<br>（2）优化内存</p>
-<p><strong>易错点</strong>：处理边界问题</p>
-<pre><code>接下来我们从例题中感受，特别是“选or不选”的问题，为解题关键思想。而“优化内存”是提分所在。
-</code></pre><h3 id="三、第一类：单序列问题"><a href="#三、第一类：单序列问题" class="headerlink" title="三、第一类：单序列问题"></a>三、第一类：单序列问题</h3><blockquote>
-<p><a href="https://leetcode.com/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener">https://leetcode.com/problems/min-cost-climbing-stairs/</a><br>剑指 Offer II 088. 爬楼梯的最少成本<br>数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。<br>每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。<br>请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>示例：<br>输入：cost = [10, 15, 20]<br>输出：15<br>解释：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。</p>
-</blockquote>
-<p><strong>分析确定状态转移方程</strong></p>
-<p>爬楼梯可以选择爬一阶或两阶，说明了当前位置 n 可能来自 n-1 或 n-2，是不是和斐波那契数列很像？</p>
-<p>那么当前位置的最小花费，就是 n-1 和 n-2 中的最小花费，加上当前位置的花费。得到：<br><strong>f(n) = min( f(n-1), f(n-2) ) + cost[n]</strong></p>
-<p><code>// Recursive Top Down - O(2^n) Time Limit Exceeded</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code><br><code>int minCost(int[] cost, int n) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>return cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code></p>
-<p>写出递推公式，再处理好边界问题（n&gt;=2）其实答案就出来了。但这样的代码通常会超时，因为很多子问题被重复计算（时间效率极差）。看看下图就可以明白。因此，画递归树是非常重要的，许多题目可以利用递归树求解，后续会有实例。</p>
-<p><img src="climb stairs.jpg" width="300" height="300"></p>
-<p><strong>使用缓存</strong></p>
-<p>为了避免重复计算，我们可以把求解过的结果保存起来。</p>
-<p><code>// Top Down Memoization - O(n) 1ms</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>vector&lt;int&gt;dp(n);</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2), dp);</code><br><code>}</code><br><code>int minCost(int[] cost, int n, vector&lt;int&gt;&amp; dp) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>if (dp[n] != 0) return dp[n];</code><br>&emsp;&emsp;<code>dp[n] = cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br>&emsp;&emsp;<code>return dp[n];</code><br><code>}</code></p>
-<p><strong>自下而上解决问题，迭代方式</strong>    </p>
-<p>就是先计算子问题。<br><code>// Bottom up tabulation - O(n) 1ms</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>vector&lt;int&gt;dp(n);</code><br>&emsp;&emsp;<code>for (int i=0; i&lt;n; ++i) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>if (i&lt;2) dp[i] = cost[i];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else dp[i] = cost[i] + min(dp[i-1], dp[i-2]);</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>return min(dp[n-1], dp[n-2]);</code><br><code>}</code>    </p>
-<p><strong>空间复杂度为O(1)的迭代代码</strong></p>
-<p>其实我们只需要用到 f(n-1), f(n-2)，并不需要保存 n 个解集，优化后代码为:<br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int curCost = 0;</code><br>&emsp;&emsp;<code>int ppCost = 0;</code><br>&emsp;&emsp;<code>int pCost = cost[0];</code><br>&emsp;&emsp;<code>for(int i = 1; i &lt; cost.size(); ++i) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>curCost = min(pCost, ppCost) + cost[i];</code><br>&emsp;&emsp;&emsp;&emsp;<code>ppCost = pCost;</code><br>&emsp;&emsp;&emsp;&emsp;<code>pCost = curCost;</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>return min(ppCost, pCost);</code><br><code>}</code>    </p>
-<p><strong>动态规划优势在于，减少了重复计算，还能节约内存</strong></p>
-
+        
       
 
       
@@ -486,59 +452,7 @@ var _hmt = _hmt || [];
 <ul>
 <li>由于函数签名不包括返回值，所以重载不需要关心返回值。重载的要求是：参数个数、参数类型、是否const</li>
 </ul>
-<p>4、static 的各种用途</p>
-<ul>
-<li>普通变量：利用只初始化一次的特性，可用于控制函数的调用次数。</li>
-<li>类成员变量：static 声明的成员不绑定到类实例，一个类只有一份，不因多个对象而产生多份拷贝。需要在类外初始化，因为static初始化时机在程序 startup 过程，main执行前。</li>
-<li>类成员函数：同样不绑定到类实例，由于没有 this 指针，无法访问普通成员变量，只能访问 static 成员变量。</li>
-<li>单例模式：只构造一次实例</li>
-<li>需要小心 static 变量在多线程下的使用（待续）</li>
-</ul>
-<p>5、const的各种用途</p>
-<ul>
-<li>编译期控制const修饰的变量为“常量”</li>
-<li>修饰类型<ul>
-<li>指针常量</li>
-<li>常量指针</li>
-<li>常引用</li>
-</ul>
-</li>
-<li>const成员函数</li>
-</ul>
-<p>6、三种类型转换</p>
-<hr>
-<h4 id="没掌握的知识点"><a href="#没掌握的知识点" class="headerlink" title="没掌握的知识点"></a>没掌握的知识点</h4><p>1、转换函数 conversion function</p>
-<p>2、操作符重载</p>
-<p>3、pointer-like classes</p>
-<p>· 智能指针</p>
-<p>· 迭代器 </p>
-<p>4、functors (function-like classes 仿函数</p>
-<p>5、模版<br>· 类模版<br>· 函数模版<br>· 成员模版    </p>
-<p>4、虚函数的底层原理</p>
-<p>4、智能指针</p>
-<p>右值 lambda</p>
-<hr>
-<p>子类可以调用父类的函数</p>
-<p>虚函数最经典重要的用法：Template Method （23设计模式之一）</p>
-<p>虚函数可以成功的原因：成员函数是通过this调用的</p>
-<p>虚函数的意思：</p>
-<ul>
-<li>纯虚函数：希望子类一定要重新定义，父类无默认定义<ul>
-<li>可以有定义（？？）</li>
-</ul>
-</li>
-<li>普通虚函数：希望子类重新定义，父类有默认定义</li>
-<li>非虚函数：不希望子类重新定义override</li>
-</ul>
-<hr>
-<h3 id="面向对象程序设计的三大类"><a href="#面向对象程序设计的三大类" class="headerlink" title="面向对象程序设计的三大类"></a>面向对象程序设计的三大类</h3><p>1、继承 Inheritance：is-a</p>
-<p>2、委托 Delegation (<strong>pimpl</strong>)：Composition by reference</p>
-<p>3、复合 Composition：has-a</p>
-<p><strong>最常用的：委托 Delegation + 继承 Inheritance</strong></p>
-<p>观察者模式 Observer</p>
-<p>组合模式 Composite：比如文件系统，目录可以放目录和文件</p>
-<p>原型模式 Prototype</p>
-
+        
       
 
       
@@ -612,134 +526,7 @@ var _hmt = _hmt || [];
 <li>环</li>
 <li>有向无环图 DAG</li>
 </ul>
-<h4 id="拓扑排序：深度优先搜索逆序。"><a href="#拓扑排序：深度优先搜索逆序。" class="headerlink" title="拓扑排序：深度优先搜索逆序。"></a>拓扑排序：深度优先搜索逆序。</h4><ul>
-<li>条件：DAG</li>
-<li>拓扑排序中，顶点v 之后的顶点，都不会指向顶点v</li>
-<li>应用：事情的完成顺序</li>
-</ul>
-<h4 id="强连通性-Strong-Connect-Component"><a href="#强连通性-Strong-Connect-Component" class="headerlink" title="强连通性 Strong Connect Component"></a>强连通性 Strong Connect Component</h4><ul>
-<li>强连通分量</li>
-<li>求SCC方法：Kosaraju 算法——对反向图的拓扑顺序进行DFS</li>
-</ul>
-<h2 id="三、最小生成树-Minimum-Spanning-Trees"><a href="#三、最小生成树-Minimum-Spanning-Trees" class="headerlink" title="三、最小生成树 Minimum Spanning Trees"></a>三、最小生成树 Minimum Spanning Trees</h2><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>・ 一个<strong>无向图</strong>的 无向子图<br>・ 连接所有顶点<br>・ 最小权重</p>
-<h4 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h4><p>1、根据树的两个最重要的性质得到最小生成树算法：</p>
-<p>・ 连接任意两个顶点会产生新环；<br>・ 删除任意一条边会得到两棵独立的树。</p>
-<p>2、切分原理 Cut property</p>
-<p>・ 切分是把图分成两个非空集合。<br>・ 横切边连接上述两个集合。</p>
-<pre><code>命题（切分定理）：一副加权图中，给定任意切分，最小权重的横切边必然属于图的最小生成树。可用反证法证得。
-</code></pre><p><strong>切分定理是解决最小生成树问题的所有算法的基础</strong>：使用切分定理找到最小生成树的一条边，不断重复，直到找到所有边。这些算法之间不同之处在于保存切分和判定最小权重横切边的方式。</p>
-<pre><code>命题（最小生成树的贪心算法）：含有V个顶点的任意加权连通图，初始状态所以边均为灰色，找到一种切分，它产生的横切边均不为黑色。将权重最小的横切边标记为黑色，反复直到标记了 V-1 条黑色边。
-</code></pre><h4 id="加权无向图的数据类型"><a href="#加权无向图的数据类型" class="headerlink" title="加权无向图的数据类型"></a>加权无向图的数据类型</h4><p><img src="MST API.png" alt=""><br><img src="Edge-weighted graph.png" alt=""></p>
-<h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><p>方法：</p>
-<p>・ 按升序把边加入 MST 集合，若要加入的边与集合中的边形成环，则忽略这条边<br>・ 重复，直到树中有 V-1 条边为止</p>
-<blockquote>
-<p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.<br>How difficult?<br>・V            &lt;– run DFS from v, check if w is reachable (T has at most V – 1 edges)<br>・log* V    &lt;– use the union-find data structure !</p>
-</blockquote>
-<blockquote>
-<p><em>Challenge</em>. Would adding edge v–w to tree T create a cycle? If not, add it.<br>  <em>Efficient solution</em>. Use the union-find data structure.<br>・Maintain a set for each connected component in T.<br>・If v and w are in same set, then adding v–w would create a cycle.<br>・To add v–w to T, merge sets containing v and w.</p>
-</blockquote>
-<pre><code>Proposition. Kruskal&apos;s algorithm computes MST in time proportional to E log E (in the worst case).
-
-Remark. If edges are already sorted, order of growth is E log* V.
-</code></pre><p><img src="kruskal.png" alt=""></p>
-<h4 id="Prim-算法"><a href="#Prim-算法" class="headerlink" title="Prim 算法"></a>Prim 算法</h4><p><strong>lazy implementation</strong></p>
-<ol>
-<li>从顶点0开始，标记顶点 “已加入”</li>
-<li>把“已加入”顶点的所有边加入优先队列（最小堆）</li>
-<li>把 minPQ 边加入 MST。若边的两端都 “已加入”，忽略这条边</li>
-<li>否则，边的另一个顶点标记 “已加入”，goto第二步</li>
-<li>重复，直到树中有 V-1 条边为止</li>
-</ol>
-<p>算法复杂度</p>
-<pre><code>Proposition. Lazy Prim&apos;s algorithm computes the MST in time proportional to E log E and extra space proportional to E (in the worst case).
-</code></pre><p><img src="Prim.png" alt=""><br><img src="Prim2.png" alt=""></p>
-<p><strong>eager implementation</strong></p>
-<ol>
-<li>从顶点0开始，标记顶点“已加入”</li>
-<li>判断“已加入”顶点v的边到w 是否比队列里已有路径 更优，如果是则加入优先队列（最小堆），否则忽略 <strong>与lazy prim不同</strong></li>
-<li>把 minPQ 边加入 MST。若边的两端都“已加入”，忽略这条边</li>
-<li>否则，边的另一个顶点标记 “已加入”，goto第二步</li>
-<li>重复，直到树中有 V-1 条边为止</li>
-</ol>
-<h2 id="四、最短路径"><a href="#四、最短路径" class="headerlink" title="四、最短路径"></a>四、最短路径</h2><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>1、应用</p>
-<ul>
-<li>地图导航</li>
-<li>网络路由协议</li>
-<li>Seam carving</li>
-</ul>
-<p>2、分情况讨论</p>
-<ul>
-<li><p>那些顶点？</p>
-<ul>
-<li><strong>单源最短路径</strong>：从顶点s 到其他所有顶点</li>
-<li>source-sink：一个顶点s 到另一个顶点t</li>
-<li>all pairs</li>
-</ul>
-</li>
-<li><p>权重的限制</p>
-<ul>
-<li>没有负权重</li>
-<li>欧几里得权重</li>
-<li>任意权重</li>
-</ul>
-</li>
-<li><p>环</p>
-<ul>
-<li>没有有向环</li>
-<li>没有负权重环</li>
-</ul>
-</li>
-</ul>
-<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><p>1、目标：找到单源最短路径，假设源顶点s</p>
-<p>方法：</p>
-<ul>
-<li>dist[] ：顶点 s 到下标顶点 w 的最短路径</li>
-<li>edge[] ：顶点 s 到下标顶点 w 路径中的最后一条边</li>
-</ul>
-<p>2、边的松弛 Edge relaxation</p>
-<p><strong>最短路径的实现都基于一个称为松弛的简单操作。</strong></p>
-<p><em>放松边 e=v-&gt;w 意味着：检查 s到w的最短路径 是否 s经过v再到w</em>，如果是，称e的放松是成功的。</p>
-<blockquote>
-<p>松弛术语来自：用一根橡皮筋沿着连接两个顶点的路径紧紧展开的比喻：放松一条边类似将橡皮筋转移到一条更短的路径上，从而缓解了橡皮筋的压力。</p>
-</blockquote>
-<p>3、最短路径算法理论基础 —— 最优性条件（Optimality condition)</p>
-<p><img src="optimality condition pf.png" alt=""></p>
-<p>4、通用算法</p>
-<p><img src="Generic SP algorithm.png" alt=""></p>
-<blockquote>
-<p>Efficient implementations. How to choose which edge to relax?<br>Ex 1. Dijkstra’s algorithm (nonnegative weights).<br>Ex 2. Topological sort algorithm (no directed cycles).<br>Ex 3. Bellman-Ford algorithm (no negative cycles).</p>
-</blockquote>
-<h4 id="Dijkstra-算法-（权重非负的加权无向图）"><a href="#Dijkstra-算法-（权重非负的加权无向图）" class="headerlink" title="Dijkstra 算法 （权重非负的加权无向图）"></a>Dijkstra 算法 （权重非负的加权无向图）</h4><ol>
-<li>初始化distTo[] 为正无穷，起始顶点s distTo[s] = 0，放松与s连接的所有边，更新edge[] distTo[]</li>
-<li>类似Prim算法，标记“已放松的顶点”，把它的边加入优先队列（最小堆）</li>
-<li>放松 minPQ 的那条边。（因为这条边是连接s 的最短路径了，先放松它，它连接的顶点也会得到最短路径） </li>
-<li>重复，直到所有顶点“已放松”</li>
-</ol>
-<p><img src="Dijkstra.png" alt=""><br><img src="Dijkstra2.png" alt=""></p>
-<blockquote>
-<p>Proposition. Dijkstra’s algorithm computes a SPT in any edge-weighted digraph with nonnegative weights.<br>Pf.<br>・Each edge e = v→w is relaxed exactly once (when v is relaxed),leaving distTo[w] ≤ distTo[v] + e.weight().<br>・Inequality holds until algorithm terminates because:<br>– distTo[w] cannot increase  <strong>&lt;– distTo[] values are monotone decreasing</strong><br>– distTo[v] will not change  <strong>&lt;– we choose lowest distTo[] value at each step (and edge weights are nonnegative)</strong><br>・Thus, upon termination, shortest-paths optimality conditions hold.</p>
-</blockquote>
-<blockquote>
-<p>Dijkstra’s algorithm seem familiar?<br>・Prim’s algorithm is essentially the same algorithm.<br>・Both are in a family of algorithms that compute a graph’s spanning tree.</p>
-</blockquote>
-<blockquote>
-<p>Main distinction: Rule used to choose next vertex for the tree.<br>・Prim’s: Closest vertex to the tree (via an undirected edge).<br>・Dijkstra’s: Closest vertex to the source (via a directed path).</p>
-</blockquote>
-<h4 id="按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）"><a href="#按照拓扑顺序放松顶点-（无环加权有向图-edge-weighted-DAGs）" class="headerlink" title="按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）"></a>按照拓扑顺序放松顶点 （无环加权有向图 edge-weighted DAGs）</h4><blockquote>
-<p>Proposition. Topological sort algorithm computes SPT in any edgeweighted DAG in time proportional to E + V.<br>Pf.<br>・Each edge e = v→w is relaxed exactly once (when v is relaxed),leaving distTo[w] ≤ distTo[v] + e.weight().<br>・Inequality holds until algorithm terminates because:<br>– distTo[w] cannot increase  <strong>&lt;– distTo[] values are monotone decreasing</strong><br>– distTo[v] will not change  <strong>&lt;– because of topological order, no edge pointing to v will be relaxed after v is relaxed</strong><br>・Thus, upon termination, shortest-paths optimality conditions hold</p>
-</blockquote>
-<pre><code>总结 Dijkstra算法 和 拓扑排序算法 可以解决单源最短路径的证明：
-两个算法都满足了最短路径的最优性条件。他们用不同方式保证了：如果v是从起点可达的，所有 v-&gt;w 的边只会被放松一次，不等式 distTo[w] ≤ distTo[v] + e.weight() 成立。
-保证了 distTo[v] 是不会变化的：
-1. 权重非负的情况下，Dijkstra算法保证：从起始顶点的最小权重边开始放松，之后的放松操作都不可能使任何 distTo[]小于 distTo[v]。也就是 distTo[放松了的顶点] 不会再变化（已经是最小权重了嘛）；
-2. 无环的时候，拓扑顺序保证：放松了的顶点，后面再没有顶点指向它，也就是放松的顶点不会再变化（都没机会改变了嘛）。
-因此放松 v-&gt;w 的边时，要么放松无效（ 原有的 distTo[w] ≤ distTo[v] + e.weight() ）；
-要么放松成功（ 原有的 distTo[w] &gt; distTo[v] + e.weight()， 放松后 distTo[w] = distTo[v] + e.weight()）
-</code></pre><p>两个子问题<br>1、无环加权有向图的最长路径</p>
-<p>Formulate as a shortest paths problem in edge-weighted DAGs.<br>・Negate all weights.<br>・Find shortest paths.<br>・Negate weights in result.</p>
-<p>应用：并行任务调度（Parallel job scheduling）</p>
-<p>2、关键路径方法 （Critical path method)</p>
-<h4 id="一般加权有向图"><a href="#一般加权有向图" class="headerlink" title="一般加权有向图"></a>一般加权有向图</h4>
+        
       
 
       
@@ -810,100 +597,7 @@ Remark. If edges are already sorted, order of growth is E log* V.
 <li>奥尔兹把杆杠放着一张电网的两端，结果小白鼠很乐意在电网上跑来跑去，直到它们烧焦的爪子疼得无法继续跑。</li>
 </ol>
 <p>没过多久，精神病学家觉得这个实验对人类来说也是可以尝试的。</p>
-<ol>
-<li>罗伯特 希斯在病人大脑中植入电极，并给他们一个控制盒。结果他们表现得跟小鼠如出一辙，他们平均每分钟会电击自己40次。休息的时候，虽然病人们承认自己饿了，仍不愿意停下电击去吃东西。</li>
-<li>实验人员提出终止实验或切断点击时，有一个病人提出强烈抗议。</li>
-<li>另一个被试者在电流切断后仍按了200多下按钮，直到实验人员要求他停下来。<!--（有趣的是，希斯的解释是该病人精神混乱，不能成为合格的实验对象。他尚未充分了解受刺激的大脑区域。实际上，这种行为就是上瘾和强迫症的最初暗示。）--></li>
-</ol>
-<h4 id="补充实验背景"><a href="#补充实验背景" class="headerlink" title="补充实验背景"></a>补充实验背景</h4><p>当时占主导地位的科学范式是行为主义，认为唯一值得测量的东西就是行为。想法/感觉 都是浪费时间的东西。这可能就是为什么希斯早期的报告没有记录病人在自我刺激时有什么感觉。科学家推断被试者把精神的快感当作“奖励”。</p>
-<h4 id="触发进阶发现的实验"><a href="#触发进阶发现的实验" class="headerlink" title="触发进阶发现的实验"></a>触发进阶发现的实验</h4><p>有一名病人有间歇性睡眠症，实验人员给他一个便携植入设备，帮助他保持清醒。这位病人描述自我刺激的感觉时说，那“令人非常沮丧”。虽然他“经常性地、有时近乎疯狂地按按钮”，但他一直没能达到实验中那种满足感。自我刺激令他焦虑不安，而不是辛福快乐。他看起来更像是患强迫症的人。</p>
-<h4 id="实验的猜测"><a href="#实验的猜测" class="headerlink" title="实验的猜测"></a>实验的猜测</h4><p>小白鼠之所以刺激自己，是因为大脑告诉它们，只要再按一次杆杠，奇妙的事情就会发生。</p>
-<h4 id="人脑的“奖励”系统"><a href="#人脑的“奖励”系统" class="headerlink" title="人脑的“奖励”系统"></a>人脑的“奖励”系统</h4><p>奥米兹和米尔纳发现的不是快感中心，而是现在神经科学家称为“奖励”系统的东西。他们刺激的区域是人脑最原始的动力系统的一部分。这个系统逐步进化，驱使我们采取行动和消耗体能。每当这个区域收到刺激，大脑就会说：“再来一次！这会让你感觉良好！”但刺激本身并不会带来满足感。</p>
-<p>并非只有大脑中的电极能激活这个系统。世界上充满着带来刺激的东西，从饭店菜单和直邮广告，到乐透彩票和电视广告，都能让我们变成真人版的奥米兹和米尔纳的小白鼠，去追寻对快乐的承诺。这时候，我们的大脑就会对“我想要”的东西深深着迷，而说“我不要”更加困难。</p>
-<h3 id="三、“我想要”的神经生物学原理"><a href="#三、“我想要”的神经生物学原理" class="headerlink" title="三、“我想要”的神经生物学原理"></a>三、“我想要”的神经生物学原理</h3><p>奖励系统是怎么迫使我们行动的？当大脑发现获得奖励的机会，就会释放多巴胺（一种神经递质），它告诉大脑的其它部分“怎样才能让贪婪的我们得手”。大量的多巴胺并不能产生快乐的感觉，而是一种激励。我们发现了如何才能得到快乐，而且愿意为了获得这种感觉付出努力。</p>
-<p>2001年，斯坦福神经科学家布莱恩-克努森 证明了多巴胺会促使人们期待得到奖励，但不能感觉到获得奖励时的快乐。研究如下：</p>
-<blockquote>
-<p>克努森扫描被试者的大脑，让他们看到某个符号时就期待自己能赢钱，想要赢球就按一个按钮。只要符号一出现，人类大脑中释放多巴胺的“奖励中心”就会发生反应，但当被试者真的赢了钱，这个区域反而安静下来。大脑中另一个区域产生了赢钱的快感。</p>
-</blockquote>
-<p><strong>多巴胺控制的是行动，不是快乐。</strong></p>
-<p><strong>奖励系统活跃时，感受到的是期待，而不是快乐。</strong></p>
-<p>任何让我们高兴的东西都会刺激奖励系统，例如美食，商店门口的半价招牌，性感陌生人的微笑，承诺让你变得富有的商业广告。当多巴胺劫持了你的注意力，大脑只会想如何获得或重复那个触发它的东西。这是大自然的办法，它保证你不会因为不愿意采集浆果而被饿死，或是因为觉得很难吸引潜在伴侣而加速人类灭亡。<strong>进化根本不关心你快乐与否，但它会利用对快乐的承诺，让我们不停地为生计奔忙。大脑正是靠对快乐的承诺让你不断狩猎、采集野果、工作和求爱，而不是让你直接感受快乐。</strong></p>
-<p><em>你也可以思考一下色情图片对我们奖励系统的影响。我们发现互联网上关于色情的东西随处可见，而每一次性“机会”的本能，会使人们最终对色情网站上瘾，或是对某些涉性广告上瘾，比如除臭剂和高档牛仔裤的广告。</em><!--此为书籍原文，但笔记作者无法理解除臭剂广告为何让人上瘾，内衣广告还差不多--></p>
-<p>现代科技“及时行乐”的特点，加上原始的激励系统，让我们成了多巴胺的奴隶。</p>
-<ul>
-<li>从前：狂按电话答录机按钮、查收新消息的刺激感</li>
-<li>接着：电脑会告诉我们 “你收到了新邮件！”</li>
-<li>现在：Facebook、Twitter、电子邮件和短信息。因为我们知道自己可能会收到新消息，或者下一个更像的YouTube视频可能让我们捧腹大笑，我们就不停刷新，点击下一个链接，就像得了强迫症一样查看我们的设备。这些设备就这样俘获了我们，让我们不断要求更多。我们点击鼠标，就跟小白鼠想再来一次电击一样。<strong>我们追寻着难以捉摸的奖励，直到最终觉得满意。</strong></li>
-<li>手机、互联网和其它社交媒体可能是无意激活了我们的奖励系统，但电脑和电子游戏的设计者是有意识地控制了人们的奖励系统。“升级” “获胜” 随时可能出现，游戏就这样激发人的兴趣，也是难以戒掉的原因。电子游戏刺激和使用苯丙胺时产生的多巴胺一样多，具有不确定性的“得分” “升级” 让你的多巴胺神经元不停燃烧。</li>
-</ul>
-<blockquote>
-<p>2005年，28岁的韩国锅炉修理工在连续50小时奋战“星际争霸”后死于心血管衰竭。这件事很难不联系到奥米兹和米尔纳实验中力竭而亡的小白鼠。</p>
-</blockquote>
-<pre><code>深入剖析：是什么让你的多巴胺神经元不停燃烧？食物？酒精？购物？Facebook？还是其它？这一周试着观察是什么吸引了你的注意力。是什么给了你奖励的承诺，强迫你去寻求满足感？
-</code></pre><h3 id="四、帕金森症的处方"><a href="#四、帕金森症的处方" class="headerlink" title="四、帕金森症的处方"></a>四、帕金森症的处方</h3><p>帕金森症的病因是脑细胞中缺少多巴胺，治疗方式是同时服用两种药物：左旋多巴和多巴胺受体激动剂。这在减轻帕金森主要症状的同时也带来了难以预料的新问题。</p>
-<ul>
-<li>一个54岁女人突然对曲奇饼干、意大利面产生强烈的欲望，她会很晚都不去睡觉，一直不停狂吃。</li>
-<li>一个52岁男人养成每天赌博的习惯，在赌场待了36小时，花光所有积蓄。</li>
-<li>一个49岁男人觉得非常痛苦，因为食量大增、总想喝酒、妻子说他“性欲过强”并打电话向警察求助。</li>
-</ul>
-<p>这些例子有些极端，但当你被奖励的承诺吸引时，你大脑中的情况和这些人没有多大差别。<strong>当多巴胺给我们大脑安排寻找奖励的任务时，我们就展现了我们最敢于冒险、最冲动、最失控的一面。最重要的是，如果奖励迟迟没到，奖励的承诺（和一想到要停下来就不断增长的焦虑）足以让我们一直上瘾。</strong>如果你是人类，你会掏空钱包、填饱肚子——这还是好的。严重的话会发现自己患上了强迫症。</p>
-<h3 id="五、神经营销学的崛起"><a href="#五、神经营销学的崛起" class="headerlink" title="五、神经营销学的崛起"></a>五、神经营销学的崛起</h3><p>当奖励的承诺释放多巴胺时，你更容易受到其它形式的诱惑。比如色情图片使男性更容易在经济方面冒险，幻想中乐透彩票会让人饮食过量。这两种对无法得到的奖励的幻想会给你带来麻烦。大量分泌的多巴胺会放大“及时行乐”的快感，让你不再关注长期的后果。</p>
-<p>发现这事的人，是想从你身上赚钱的人。</p>
-<p>零食业的方方面面都设计得让我们更有购买欲。比如，大型食品公司中菜谱搭配适当的糖类、盐类和脂肪，让你的多巴胺神经元处于兴奋状态；乐透彩票广告鼓励你去想象中大奖后拿着100万美元去做些什么。杂货店老板也不傻，他们把最具诱惑力的商品放着前面和中间。</p>
-<blockquote>
-<p>走进商店时，第一眼看到的就是面点区免费试吃的样品。样品包含了两个最大的奖励承诺——免费和食物。（如果发放样品的人很有魅力，那就是第三个承诺了。那你就完蛋了。）</p>
-</blockquote>
-<blockquote>
-<p>品尝甜食样品的人更容易购买放纵自己的食物，比如牛排和蛋糕，或是打折商品。（还会让被试者更想获得与购物无关的奖励，包括去度假、看一场爱情电影、泡温泉。这说明了商家无论推销什么产品，都应该在买东西时拼命供应饼干。）</p>
-</blockquote>
-<p>大脑的奖励系统对新鲜感和多样性也会有反应。所以说餐厅会不断在标准套餐的基础上推出新品，服装商会为压箱底的旧款式推出新颜色。</p>
-<ul>
-<li>我来一杯普通的咖啡吧？嗯，到店里我就点这个。噢，菜单上好像有新东西。你又激动了吧！</li>
-<li><p>你最喜欢的服装目录里有件绞花针织毛衣？太没劲了。但是，等一下，这款毛衣有焦糖棕色和奶油黄色的？今天你又多巴胺分泌旺盛了吧！</p>
-</li>
-<li><p>还有价格的巧妙设置，能保证你大脑的原始部分想储存这些稀有资源。从能让你觉得“买到便宜货”的东西，“买一送一”的承诺到高喊“减价60%”的招牌。特别有效的方法上，在打折零售价旁边加一个高得离谱的“建议零售价”。你的大脑快速计算出省了多少钱，而且（毫无逻辑）认为这个差价上你赚到的钱。简直就是白送嘛！如果再给你时间限制或数量限制的话（“店内促销中午截止”、“特供最后一件”），你就会像在大草原抢夺最后一点食物那样，冲上去大抢特抢。</p>
-</li>
-<li>卖家通过味觉让消费者产生不存在的欲望。让人食欲大开的气味可能很快就会引发你的奖励承诺。当你接触到气味分子，大脑就会开始寻找气味的来源。你要知道，香气不是店里食物飘出来的，而是精心设计的装置释放到人行道上。</li>
-<li>佛罗里达一家医院里，核磁共振部门的医生在等候区释放沙滩椰树和海洋气味，成功降低了最后一分钟取消检查预约的概率。</li>
-</ul>
-<h3 id="六、做个多巴胺侦探"><a href="#六、做个多巴胺侦探" class="headerlink" title="六、做个多巴胺侦探"></a>六、做个多巴胺侦探</h3><p>当你开始关注的时候，你就会发现有多少陷阱中等着诱惑你、你的多巴胺神经元和你的钱。</p>
-<p>作者的学生表示，这种观察让自己充满动力。他们中观察商家技巧时感到高兴。这也有助于发现一些购物的秘密，比如为什么有些东西在商店里看起来那么吸引人，但回到家却那么令人失望。一位女士终于弄明白了，为什么她无聊的时候总想冲进去食品商店，不是为了买食品，只是为了进去看看。</p>
-<p>虽然我们所处的世界总让我们产生欲望，但只要我们用心观察，就能看透一些东西。知道那是怎么一回事并不能完全消除你的欲望，但能让你有机会抗争一下，锻炼一下“我不要”力量。</p>
-<pre><code>深入剖析：谁在控制你的多巴胺神经元？观察一下，零售商和营销人员如何刺激奖励承诺。把逛商店或看广告当作游戏。你闻到了什么？看到了什么？听到了什么？当你知道这些暗示都是经过精心设计，专门要诱惑你上钩时，你就能看清他们到底是什么，也能成功抵御了。
-</code></pre><h3 id="七、让多巴胺发挥作用"><a href="#七、让多巴胺发挥作用" class="headerlink" title="七、让多巴胺发挥作用"></a>七、让多巴胺发挥作用</h3><p>运用从神经营销学家那里学到的，试着把我们最不喜欢东西“多巴胺化”。在承诺奖励之后，让我们不开心的家庭琐事可能变得很有吸引力。当奖励在遥远的未来才能实现时，我们可以通过幻想最终的奖励（不是像彩票广告一样哦）从神经元里挤出一点多余的多巴胺。</p>
-<blockquote>
-<p>戒酒和戒毒过程中，最有效的干预疗法“鱼缸法”：通过药物检测的病人有机会从鱼缸抽出一张纸。一半的纸写着一个价格从1～20美元不等，其中一张纸写着100美元。另一半写着“继续努力”。这应该不算什么激励作用，但确实起作用。研究中，83%可能拿到“鱼缸奖励”的病人坚持了12周治疗，普通疗法只有20%坚持下来。80%有“鱼缸奖励”的病人通过了药物测试，而普通疗法只有40%。治疗结束后，使用“鱼缸法”的人更不容易故态复萌——即便没有奖励承诺了。</p>
-<p><strong>这就证明了，难以预料的奖励究竟有多么强大的力量。和有保证的小奖励相比，我们的奖励系统面对可能获得的大奖会更兴奋。它促使我们去做任何可能获奖的事。这就是为什么人们宁愿买乐透彩票，也不愿意把钱存到银行里，赚取有保障的2%的利息。这也就是为什么，公司最底层的员工也相信自己有朝一日能成为CEO。</strong></p>
-</blockquote>
-<p><strong>意志力实验：为了你的“我愿意”挑战分泌多巴胺。如果有什么事让你觉得很不愉快，所以你总是拖延不去做，你能不能把它和能让多巴胺神经元燃烧的事联系做一起，从而促使自己去做呢？</strong></p>
-<p>以下为作者的学生的办法</p>
-<ul>
-<li>带上可怕的文书工作走进自己喜欢的咖啡厅，边喝热巧克力边完成工作。</li>
-<li>买一堆刮刮乐彩票放着你想拖延的项目周围。</li>
-<li>想象自己努力工作后取得的最佳结果，让未来的奖励显得更加真实。</li>
-</ul>
-<h3 id="八、多巴胺的阴暗面"><a href="#八、多巴胺的阴暗面" class="headerlink" title="八、多巴胺的阴暗面"></a>八、多巴胺的阴暗面</h3><p>奖励的承诺带给我们的压力和快乐几乎不分上下。渴望并不是总让我们感觉良好，有时候它会让我们觉得自己堕落了。因为多巴胺的首要功能是让我们追求快乐，而不是让我们快乐。它并不在意给我们带来点压力，即便这会让我们在追求快乐的时候觉得不快乐。</p>
-<pre><code>深入剖析：欲望的压力。这一周，看你能否发现渴望会引发压力和焦虑。如果你屈服于诱惑的话，你觉得这是自己对奖励承诺的反应？还是在缓解焦虑？
-</code></pre><p>我们误把渴望的感觉当作快乐的保证。奖励的承诺有很大的力量，它会让我们继续追求那些不会带给我们快乐的东西，会让我们消费那些不会带来满足感，只会带来更多痛苦的东西。追求奖励是多巴胺是主要目标，所以，即便你经历的事物和原本承诺的并不相符，它也不会给你释放“停下来”的信号。</p>
-<p>对很多人来说，这个发现会让他们对奖励感到不满，然后远离奖励。吃薯片上瘾的人会带着怀疑的目光打量一包薯片。为了获得快乐而购物的人，她最喜欢去购物中心的感觉，但花钱让她有压力，于是信用卡放在家里，她从购物中心回家时，远比她花了很多钱时更快乐。</p>
-<p>当你理解了所谓的“奖励”到底给自己什么感觉时，你就能做出最明智的决定，知道该怎么“奖励”自己了。</p>
-<p>想一想你最大的“我不要”的意志力挑战吧。那很可能是一件让你觉得快乐的事——或者，如果你能得到足够多的话，它就会让你觉得快乐。但仔细分析一下那种经历和它的后果，你就会发现结果总是事与愿违。</p>
-<p>如果强迫大脑，让它一边期待着奖励——获得快乐、幸福和满足，结束痛苦和压力，一边真切地感受现实状况，那么大脑最终会挑战它的期望值。</p>
-<p><strong>意志力实验：测试奖励的承诺。找一个常常让你放纵自己的诱惑因素测试一下。请关注你放纵的过程，不要急着去体验。注意这种奖励的承诺给你什么感觉。期待、希望、兴奋、焦虑、流口水……你的大脑和身体感觉到了什么。然后允许自己解释诱惑。和你的期望，这种体验怎么样？奖励的承诺有没有消失？它是否仍然促使你吃得更多、花得更多、待得更久？什么时候你会感到满足？你是否达到了一种没法继续的程度，因为你太饱了、太累了、太沮丧了、没时间了，或是无法得到“奖励”了？</strong></p>
-<p>进行这练习会有两种结果：</p>
-<ol>
-<li>当他们真的关注放纵的感受时，他们实际上并不需要自己想象中那么多东西。</li>
-<li>这种体验完全无法让他们满足。这就暴露了奖励的承诺和实际体验之间的差别。</li>
-</ol>
-<p>这两种观察都会让你对曾经无法控制的事有更强的自控力。</p>
-<h3 id="九、欲望的重要性"><a href="#九、欲望的重要性" class="headerlink" title="九、欲望的重要性"></a>九、欲望的重要性</h3><p>当我们错把欲望当快乐时，我们就遇到麻烦了。这时候，解决问题的方法不是消除欲望。没有欲望的生活可能不需要这么多自控，但那也不能称为生活了。</p>
-<p>大脑的“奖励系统”受损，快感缺乏的人认为生活就是一系列的习惯，他们没有对满足感的期待。他们可以吃东西、购物、社交，甚至有性生活，但不会期待从中获得快乐。当他们不再需要快感的时候，他们就失去了动力。如果你想不出任何一件让你感觉良好的事，你就很难从床上爬起来做事，这种毫无疑问的状态耗尽了希望，也夺走了很多人的生命。</p>
-<p>当我们的奖励系统平静下来，我们并不会感到满足，而更可能表现得冷漠。这就是为什么很多帕金森病人会觉得抑郁，而不是安宁。神经科学家现在怀疑，不够活跃的奖励系统正是抑郁症的生理学基础。科学家观察抑郁症患者的大脑，发现即使唾手可得的奖励，这些人的奖励系统也不会变的活跃起来，系统并非完全不活动，只是不能创造出完整的“我想要”或“我想得到它”的感觉。</p>
-<h4 id="奖励的悖论"><a href="#奖励的悖论" class="headerlink" title="奖励的悖论"></a>奖励的悖论</h4><p>如果我们想拥有自控力，就需要区分让我们的生活有意义的真实奖励，和让我们分散精力、上瘾的虚假奖励。</p>
-<p>学会区分这两种奖励，也许是我们能做到的最好的事了。这不并简单。</p>
-<h3 id="十、写在最后的话"><a href="#十、写在最后的话" class="headerlink" title="十、写在最后的话"></a>十、写在最后的话</h3><p>欲望是大脑的行动战略。它可能对自控构成威胁，也可能是意志力的来源。当多巴胺让我们屈服于诱惑的时候，我们必须屈服渴望和快乐。我们也可以利用多巴胺和奖励的承诺来激励自己和他人。</p>
-<p>欲望没有绝对的好坏之分，重要是欲望将我们引向那个方向，以及我们是否足够明智，知道什么时候该听从欲望的声音。</p>
-
+        
       
 
       

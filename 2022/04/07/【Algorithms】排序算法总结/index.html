@@ -309,22 +309,16 @@ var _hmt = _hmt || [];
       .comments{margin:30px;padding:10px;background:#fff}
       @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
     </style>
-    <div id="vcomment" class="comment"></div> 
-<script src="//code.bdstatic.com/npm/leancloud-storage@4.12.0/dist/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+    <div id="vcomment" class="comment"></div>
+<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
 <script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '.comment',
-            notify: notify,
-            verify: verify,
-            app_id: "zEXRBIRMq7Y5y0UZ4Qo09hZ1-MdYXbMMI",
-            app_key: "WxYWunJGSinFN4iskR2JqLke",
-            placeholder: "♪( ´▽｀)",
-            avatar:"mm",
-            serverURLs: "zexrbirm.api.lncldglobal.com"
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    window.onload = function () {
+        Waline.init({
+            el: '#waline',
+            serverURL: 'https://my-waline-g5yas9txz-homyang.vercel.app/',
         });
     }
 </script>

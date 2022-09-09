@@ -54,7 +54,6 @@ var _hmt = _hmt || [];
 </script>
 
 
-  
 </head>
 </html>
 <body>
@@ -444,24 +443,28 @@ Remark. If edges are already sorted, order of growth is E log* V.
       .comments{margin:30px;padding:10px;background:#fff}
       @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
     </style>
-    <div id="vcomment" class="comment"></div>
-<script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+    <div id="vcomment" class="comment"></div> 
+<script src="//code.bdstatic.com/npm/leancloud-storage@4.12.0/dist/av-min.js"></script>
+<script src="//unpkg.com/@waline/client@v2/dist/waline.js"></script>
+<link href="//unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet">
 <script>
-    var notify = 'false' == true ? true : false;
-    var verify = 'false' == true ? true : false;
-    window.onload = function () {
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        const locale = {
+            placeholder: '如果你对本博文有自己的见解，或发现我有遗漏的地方，欢迎你留言告诉我 ♪( ´▽｀)',
+          }; 
         Waline.init({
-            el: '#waline',
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
             serverURL: 'https://my-waline-g5yas9txz-homyang.vercel.app/',
+            locale,
         });
     }
 </script>
     </section>
   
-
-  
-
 
 
           </div>

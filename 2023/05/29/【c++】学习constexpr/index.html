@@ -6,21 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://homyeung.github.io">
-  <title>【Algorithms】我对动态规划的理解Ⅰ | homYang&#39;s blog</title>
+  <title>【c++】学习constexpr | homYang&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、题型辨别求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。 二、分析以上题型都有几个共同点 1、大问题可分解为小问题，有最小可行解，存在重复子问题  【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】  2、小问题">
+  <meta name="description" content="一、constexpr是什么 constexpr 用于定义常量表达式，是 C++11 引入的关键字，更重要的是 constexpr 定义的值会尽可能（详见二.2）在编译期完成计算，可以认为 constexpr 包含了 const。 constexpr 不仅用于变量定义，还可以修饰函数。这部分在不同 C++ 标准中的宽容度不同。 由于在编译期完成计算，它定义的变量位于只读内存中。  二、conste">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Algorithms】我对动态规划的理解Ⅰ">
-<meta property="og:url" content="https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/index.html">
+<meta property="og:title" content="【c++】学习constexpr">
+<meta property="og:url" content="https://homyeung.github.io/2023/05/29/【c++】学习constexpr/index.html">
 <meta property="og:site_name" content="homYang&#39;s blog">
-<meta property="og:description" content="一、题型辨别求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。 二、分析以上题型都有几个共同点 1、大问题可分解为小问题，有最小可行解，存在重复子问题  【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】  2、小问题">
+<meta property="og:description" content="一、constexpr是什么 constexpr 用于定义常量表达式，是 C++11 引入的关键字，更重要的是 constexpr 定义的值会尽可能（详见二.2）在编译期完成计算，可以认为 constexpr 包含了 const。 constexpr 不仅用于变量定义，还可以修饰函数。这部分在不同 C++ 标准中的宽容度不同。 由于在编译期完成计算，它定义的变量位于只读内存中。  二、conste">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/climb%20stairs.jpg">
-<meta property="og:updated_time" content="2022-09-05T08:29:28.206Z">
+<meta property="og:updated_time" content="2023-05-29T12:07:28.689Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Algorithms】我对动态规划的理解Ⅰ">
-<meta name="twitter:description" content="一、题型辨别求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。 二、分析以上题型都有几个共同点 1、大问题可分解为小问题，有最小可行解，存在重复子问题  【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】  2、小问题">
-<meta name="twitter:image" content="https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/climb%20stairs.jpg">
+<meta name="twitter:title" content="【c++】学习constexpr">
+<meta name="twitter:description" content="一、constexpr是什么 constexpr 用于定义常量表达式，是 C++11 引入的关键字，更重要的是 constexpr 定义的值会尽可能（详见二.2）在编译期完成计算，可以认为 constexpr 包含了 const。 constexpr 不仅用于变量定义，还可以修饰函数。这部分在不同 C++ 标准中的宽容度不同。 由于在编译期完成计算，它定义的变量位于只读内存中。  二、conste">
   
   
     <link rel="icon" href="/assets/yui.jpg">
@@ -148,55 +146,43 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="【Algorithms】-【Algorithms】我对动态规划的理解Ⅰ" class="article article-type-【Algorithms】 " itemscope="" itemprop="blogPost">
+            <article id="post-【c++】学习constexpr" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      【Algorithms】我对动态规划的理解Ⅰ
+      【c++】学习constexpr
     </h1>
   
 
         
-        <a href="/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/" class="archive-article-date">
-  	<time datetime="2022-03-20T07:30:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-20</time>
+        <a href="/2023/05/29/【c++】学习constexpr/" class="archive-article-date">
+  	<time datetime="2023-05-29T10:12:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="一、题型辨别"><a href="#一、题型辨别" class="headerlink" title="一、题型辨别"></a>一、题型辨别</h3><p>求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。</p>
-<h3 id="二、分析"><a href="#二、分析" class="headerlink" title="二、分析"></a>二、分析</h3><p>以上题型都有几个<strong>共同点</strong></p>
-<p>1、大问题可分解为小问题，有最小可行解，存在重复子问题</p>
-<blockquote>
-<p>【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：<br>斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】</p>
-</blockquote>
-<p>2、小问题的每一步本质都是“选or不选”的问题</p>
-<a id="more"></a>
-<p><strong>难点</strong>：动态规划类问题难在：</p>
-<p>（1）找“大小问题之间的关系式”<br>（2）优化内存</p>
-<p><strong>易错点</strong>：处理边界问题</p>
-<pre><code>接下来我们从例题中感受，特别是“选or不选”的问题，为解题关键思想。而“优化内存”是提分所在。
-</code></pre><h3 id="三、第一类：单序列问题"><a href="#三、第一类：单序列问题" class="headerlink" title="三、第一类：单序列问题"></a>三、第一类：单序列问题</h3><blockquote>
-<p><a href="https://leetcode.com/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener">https://leetcode.com/problems/min-cost-climbing-stairs/</a><br>剑指 Offer II 088. 爬楼梯的最少成本<br>数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。<br>每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。<br>请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>示例：<br>输入：cost = [10, 15, 20]<br>输出：15<br>解释：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。</p>
-</blockquote>
-<p><strong>分析确定状态转移方程</strong></p>
-<p>爬楼梯可以选择爬一阶或两阶，说明了当前位置 n 可能来自 n-1 或 n-2，是不是和斐波那契数列很像？</p>
-<p>那么当前位置的最小花费，就是 n-1 和 n-2 中的最小花费，加上当前位置的花费。得到：<br><strong>f(n) = min( f(n-1), f(n-2) ) + cost[n]</strong></p>
-<p><code>// Recursive Top Down - O(2^n) Time Limit Exceeded</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code><br><code>int minCost(int[] cost, int n) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>return cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code></p>
-<p>写出递推公式，再处理好边界问题（n&gt;=2）其实答案就出来了。但这样的代码通常会超时，因为很多子问题被重复计算（时间效率极差）。看看下图就可以明白。因此，画递归树是非常重要的，许多题目可以利用递归树求解，后续会有实例。</p>
-<p><img src="climb stairs.jpg" width="300" height="300"></p>
-<p><strong>使用缓存</strong></p>
-<p>为了避免重复计算，我们可以把求解过的结果保存起来。</p>
-<p><code>// Top Down Memoization - O(n) 1ms</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>vector&lt;int&gt;dp(n);</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2), dp);</code><br><code>}</code><br><code>int minCost(int[] cost, int n, vector&lt;int&gt;&amp; dp) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>if (dp[n] != 0) return dp[n];</code><br>&emsp;&emsp;<code>dp[n] = cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br>&emsp;&emsp;<code>return dp[n];</code><br><code>}</code></p>
-<p><strong>自下而上解决问题，迭代方式</strong>    </p>
-<p>就是先计算子问题。<br><code>// Bottom up tabulation - O(n) 1ms</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>vector&lt;int&gt;dp(n);</code><br>&emsp;&emsp;<code>for (int i=0; i&lt;n; ++i) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>if (i&lt;2) dp[i] = cost[i];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else dp[i] = cost[i] + min(dp[i-1], dp[i-2]);</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>return min(dp[n-1], dp[n-2]);</code><br><code>}</code>    </p>
-<p><strong>空间复杂度为O(1)的迭代代码</strong></p>
-<p>其实我们只需要用到 f(n-1), f(n-2)，并不需要保存 n 个解集，优化后代码为:<br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int curCost = 0;</code><br>&emsp;&emsp;<code>int ppCost = 0;</code><br>&emsp;&emsp;<code>int pCost = cost[0];</code><br>&emsp;&emsp;<code>for(int i = 1; i &lt; cost.size(); ++i) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>curCost = min(pCost, ppCost) + cost[i];</code><br>&emsp;&emsp;&emsp;&emsp;<code>ppCost = pCost;</code><br>&emsp;&emsp;&emsp;&emsp;<code>pCost = curCost;</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>return min(ppCost, pCost);</code><br><code>}</code>    </p>
-<p><strong>动态规划优势在于，减少了重复计算，还能节约内存</strong></p>
+        <h3 id="一、constexpr是什么"><a href="#一、constexpr是什么" class="headerlink" title="一、constexpr是什么"></a>一、constexpr是什么</h3><ol>
+<li>constexpr 用于定义常量表达式，是 C++11 引入的关键字，更重要的是 constexpr 定义的值会<strong>尽可能（详见二.2）</strong>在编译期完成计算，可以认为 constexpr 包含了 const。</li>
+<li>constexpr 不仅用于变量定义，还可以修饰函数。这部分在不同 C++ 标准中的宽容度不同。</li>
+<li>由于在编译期完成计算，它定义的变量位于<em>只读</em>内存中。</li>
+</ol>
+<h3 id="二、constexpr怎么用"><a href="#二、constexpr怎么用" class="headerlink" title="二、constexpr怎么用"></a>二、constexpr怎么用</h3><ol>
+<li><p>定义 constexpr 变量时，必须初始化且使用常量初始化。由于编译器确定了值，即 constexpr 是真常量，于是可以有如下代码：<br><code>constexpr auto arraySize = 10；</code><br><code>std::array&lt;int, arraySize&gt; data；</code> </p>
+</li>
+<li><p>从上述代码扩展一下，如果arraySize需要通过函数计算，我们可以怎么写？<br><strong>定义 constexpr 函数，参数和返回值必须是 literal 类型。</strong><br>我们需要让函数返回值是编译期能得到的常量，于是代码如下：<br><code>constexpr int pow(int base, int exp) noexcept {...};</code><br><code>std::array&lt;int, pow(3, 4)&gt; results；</code><br>这里需要说明，如果 base/exp 的值无法在编译期获得，那么 pow 函数将会在运行期执行，定义 results 就会报错</p>
+</li>
+<li><p>我们可以在定义 constexpr 成员函数：<br><code>class Point {</code><br><code>public:</code><br>&emsp;&emsp;<code>constexpr Point(double xVal = 0, double yVal = 0) noexcept : x(xVal), y(yVal)</code><br>&emsp;&emsp;<code>{}</code><br>&emsp;&emsp;<code>constexpr double xValue() const noexcept { return x; }</code><br>&emsp;&emsp;<code>constexpr double yValue() const noexcept { return y; }</code><br>&emsp;&emsp;<code>constexpr void setX(double newX) noexcept { x = newX; } // C++14</code><br>&emsp;&emsp;<code>constexpr void setY(double newY) noexcept { y = newY; } // C++14</code><br><code>private:</code><br>&emsp;&emsp;<code>double x, y;</code><br><code>};</code><br>由此我们可以直接在编译期做其他计算，比如计算中点：<br><code>constexpr Point midpoint(const Point&amp; p1, const Point&amp; p2) noexcept {</code><br>&emsp;&emsp;<code>return { (p1.xValue() + p2.xValue()) / 2, (p1.yValue() + p2.yValue()) / 2 };</code><br><code>}</code><br>许多计算在编译期完成，结果就是程序运行速度更快，且是在只读内存区完成的！（当然编译时间会增加就是了</p>
+</li>
+</ol>
+<h3 id="三、尽可能地使用-constexpr"><a href="#三、尽可能地使用-constexpr" class="headerlink" title="三、尽可能地使用 constexpr"></a>三、尽可能地使用 constexpr</h3><ol>
+<li>constexpr 的运用范围更广，如果是编译期可以得到的值，既可用于需要 constexpr 的场景，且加快了运行速度。    </li>
+<li>非编译期完成的计算，我们也不需要多写一份 non-constexpr 实现。</li>
+</ol>
 
       
 
@@ -258,7 +244,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://homyeung.github.io/2023/05/29/【c++】学习constexpr/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -272,18 +258,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2022/04/07/【Algorithms】排序算法总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          【Algorithms】排序算法总结
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/03/15/【c++】一些我总是忘记的知识/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【c++】一些我总是忘记的知识</div>
+    <a href="/2022/09/03/【c++】用一个例子串起「右值引用、引用折叠、转发」/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【c++】用一个例子串起「右值引用、引用折叠、转发」</div>
       <i class="icon-circle-right"></i>
     </a>
   

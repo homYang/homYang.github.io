@@ -6,21 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://homyeung.github.io">
-  <title>【Algorithms】我对动态规划的理解Ⅰ | homYang&#39;s blog</title>
+  <title>Archives: 2023 | homYang&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、题型辨别求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。 二、分析以上题型都有几个共同点 1、大问题可分解为小问题，有最小可行解，存在重复子问题  【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】  2、小问题">
-<meta property="og:type" content="article">
-<meta property="og:title" content="【Algorithms】我对动态规划的理解Ⅰ">
-<meta property="og:url" content="https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="homYang&#39;s blog">
+<meta property="og:url" content="https://homyeung.github.io/archives/2023/index.html">
 <meta property="og:site_name" content="homYang&#39;s blog">
-<meta property="og:description" content="一、题型辨别求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。 二、分析以上题型都有几个共同点 1、大问题可分解为小问题，有最小可行解，存在重复子问题  【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】  2、小问题">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/climb%20stairs.jpg">
-<meta property="og:updated_time" content="2022-09-05T08:29:28.206Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Algorithms】我对动态规划的理解Ⅰ">
-<meta name="twitter:description" content="一、题型辨别求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。 二、分析以上题型都有几个共同点 1、大问题可分解为小问题，有最小可行解，存在重复子问题  【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】  2、小问题">
-<meta name="twitter:image" content="https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/climb%20stairs.jpg">
+<meta name="twitter:title" content="homYang&#39;s blog">
   
   
     <link rel="icon" href="/assets/yui.jpg">
@@ -148,205 +142,49 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="【Algorithms】-【Algorithms】我对动态规划的理解Ⅰ" class="article article-type-【Algorithms】 " itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      【Algorithms】我对动态规划的理解Ⅰ
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2023" class="archive-year">2023</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2023/05/29/【c++】学习constexpr/" class="archive-article-date">
+  	<time datetime="2023-05-29T10:12:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-29</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2023/05/29/【c++】学习constexpr/">【c++】学习constexpr</a>
     </h1>
   
 
-        
-        <a href="/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/" class="archive-article-date">
-  	<time datetime="2022-03-20T07:30:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一、题型辨别"><a href="#一、题型辨别" class="headerlink" title="一、题型辨别"></a>一、题型辨别</h3><p>求最值（最大最小值/最长串/最短路径/。。），求可行解的总个数，0-1背包问题。</p>
-<h3 id="二、分析"><a href="#二、分析" class="headerlink" title="二、分析"></a>二、分析</h3><p>以上题型都有几个<strong>共同点</strong></p>
-<p>1、大问题可分解为小问题，有最小可行解，存在重复子问题</p>
-<blockquote>
-<p>【 如果第一次接触，觉得难以理解，先牢记典型大问题依赖子问题🌰：<br>斐波那契数列 f(n)=f(n-1)+f(n-2) ，解决了 上一个 和 上上个问题，就可以解决现在的问题。先不要细究如何分解子问题 】</p>
-</blockquote>
-<p>2、小问题的每一步本质都是“选or不选”的问题</p>
-<a id="more"></a>
-<p><strong>难点</strong>：动态规划类问题难在：</p>
-<p>（1）找“大小问题之间的关系式”<br>（2）优化内存</p>
-<p><strong>易错点</strong>：处理边界问题</p>
-<pre><code>接下来我们从例题中感受，特别是“选or不选”的问题，为解题关键思想。而“优化内存”是提分所在。
-</code></pre><h3 id="三、第一类：单序列问题"><a href="#三、第一类：单序列问题" class="headerlink" title="三、第一类：单序列问题"></a>三、第一类：单序列问题</h3><blockquote>
-<p><a href="https://leetcode.com/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener">https://leetcode.com/problems/min-cost-climbing-stairs/</a><br>剑指 Offer II 088. 爬楼梯的最少成本<br>数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。<br>每当爬上一个阶梯都要花费对应的体力值，一旦支付了相应的体力值，就可以选择向上爬一个阶梯或者爬两个阶梯。<br>请找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。<br>示例：<br>输入：cost = [10, 15, 20]<br>输出：15<br>解释：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。</p>
-</blockquote>
-<p><strong>分析确定状态转移方程</strong></p>
-<p>爬楼梯可以选择爬一阶或两阶，说明了当前位置 n 可能来自 n-1 或 n-2，是不是和斐波那契数列很像？</p>
-<p>那么当前位置的最小花费，就是 n-1 和 n-2 中的最小花费，加上当前位置的花费。得到：<br><strong>f(n) = min( f(n-1), f(n-2) ) + cost[n]</strong></p>
-<p><code>// Recursive Top Down - O(2^n) Time Limit Exceeded</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code><br><code>int minCost(int[] cost, int n) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>return cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br><code>}</code></p>
-<p>写出递推公式，再处理好边界问题（n&gt;=2）其实答案就出来了。但这样的代码通常会超时，因为很多子问题被重复计算（时间效率极差）。看看下图就可以明白。因此，画递归树是非常重要的，许多题目可以利用递归树求解，后续会有实例。</p>
-<p><img src="climb stairs.jpg" width="300" height="300"></p>
-<p><strong>使用缓存</strong></p>
-<p>为了避免重复计算，我们可以把求解过的结果保存起来。</p>
-<p><code>// Top Down Memoization - O(n) 1ms</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>vector&lt;int&gt;dp(n);</code><br>&emsp;&emsp;<code>return min(minCost(cost, n-1), minCost(cost, n-2), dp);</code><br><code>}</code><br><code>int minCost(int[] cost, int n, vector&lt;int&gt;&amp; dp) {</code><br>&emsp;&emsp;<code>if (n &lt; 0) return 0;</code><br>&emsp;&emsp;<code>if (n==0 || n==1) return cost[n];</code><br>&emsp;&emsp;<code>if (dp[n] != 0) return dp[n];</code><br>&emsp;&emsp;<code>dp[n] = cost[n] + min(minCost(cost, n-1), minCost(cost, n-2));</code><br>&emsp;&emsp;<code>return dp[n];</code><br><code>}</code></p>
-<p><strong>自下而上解决问题，迭代方式</strong>    </p>
-<p>就是先计算子问题。<br><code>// Bottom up tabulation - O(n) 1ms</code><br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int n = cost.size();</code><br>&emsp;&emsp;<code>vector&lt;int&gt;dp(n);</code><br>&emsp;&emsp;<code>for (int i=0; i&lt;n; ++i) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>if (i&lt;2) dp[i] = cost[i];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else dp[i] = cost[i] + min(dp[i-1], dp[i-2]);</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>return min(dp[n-1], dp[n-2]);</code><br><code>}</code>    </p>
-<p><strong>空间复杂度为O(1)的迭代代码</strong></p>
-<p>其实我们只需要用到 f(n-1), f(n-2)，并不需要保存 n 个解集，优化后代码为:<br><code>int minCostClimbingStairs(vector&lt;int&gt;&amp; cost) {</code><br>&emsp;&emsp;<code>int curCost = 0;</code><br>&emsp;&emsp;<code>int ppCost = 0;</code><br>&emsp;&emsp;<code>int pCost = cost[0];</code><br>&emsp;&emsp;<code>for(int i = 1; i &lt; cost.size(); ++i) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>curCost = min(pCost, ppCost) + cost[i];</code><br>&emsp;&emsp;&emsp;&emsp;<code>ppCost = pCost;</code><br>&emsp;&emsp;&emsp;&emsp;<code>pCost = curCost;</code><br>&emsp;&emsp;<code>}</code><br>&emsp;&emsp;<code>return min(ppCost, pCost);</code><br><code>}</code>    </p>
-<p><strong>动态规划优势在于，减少了重复计算，还能节约内存</strong></p>
+        <div class="article-info info-on-right">
+          
+          
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      <span id="busuanzi_container_page_pv">
-        |阅读量(<span id="busuanzi_value_page_pv"></span>)
-      </span>
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://homyeung.github.io/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2022/04/07/【Algorithms】排序算法总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          【Algorithms】排序算法总结
-        
-      </div>
-    </a>
   
   
-    <a href="/2022/03/15/【c++】一些我总是忘记的知识/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【c++】一些我总是忘记的知识</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-
-  
-  <section id="comments" class="comments">
-    <style>
-      .comments{margin:30px;padding:10px;background:#fff}
-      @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
-    </style>
-    <div id="vcomment" class="comment"></div> 
-<script src="//code.bdstatic.com/npm/leancloud-storage@4.12.0/dist/av-min.js"></script>
-<script src="//unpkg.com/@waline/client@v2/dist/waline.js"></script>
-<link href="//unpkg.com/@waline/client@v2/dist/waline.css" rel="stylesheet">
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        const locale = {
-            placeholder: '如果你对本博文有自己的见解，或发现我有遗漏的地方，欢迎你留言告诉我 ♪( ´▽｀)',
-          }; 
-        Waline.init({
-            el: '#vcomment',
-            notify: notify,
-            verify: verify,
-            serverURL: 'https://my-waline-g5yas9txz-homyang.vercel.app/',
-            locale,
-        });
-    }
-</script>
-    </section>
-  
-
+    
 
           </div>
         </div>
@@ -376,8 +214,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

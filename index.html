@@ -144,88 +144,6 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-【c++】学习constexpr" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/05/29/【c++】学习constexpr/">【c++】学习constexpr</a>
-    </h1>
-  
-
-        
-        <a href="/2023/05/29/【c++】学习constexpr/" class="archive-article-date">
-  	<time datetime="2023-05-29T10:12:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一、constexpr是什么"><a href="#一、constexpr是什么" class="headerlink" title="一、constexpr是什么"></a>一、constexpr是什么</h3><ol>
-<li>constexpr 用于定义常量表达式，是 C++11 引入的关键字，更重要的是 constexpr 定义的值会<strong>尽可能（详见二.2）</strong>在编译期完成计算，可以认为 constexpr 包含了 const。</li>
-<li>constexpr 不仅用于变量定义，还可以修饰函数。这部分在不同 C++ 标准中的宽容度不同。</li>
-<li>由于在编译期完成计算，它定义的变量位于<em>只读</em>内存中。</li>
-</ol>
-<h3 id="二、constexpr怎么用"><a href="#二、constexpr怎么用" class="headerlink" title="二、constexpr怎么用"></a>二、constexpr怎么用</h3><ol>
-<li><p>定义 constexpr 变量时，必须初始化且使用常量初始化。由于编译器确定了值，即 constexpr 是真常量，于是可以有如下代码：<br><code>constexpr auto arraySize = 10；</code><br><code>std::array&lt;int, arraySize&gt; data；</code> </p>
-</li>
-<li><p>从上述代码扩展一下，如果arraySize需要通过函数计算，我们可以怎么写？<br><strong>定义 constexpr 函数，参数和返回值必须是 literal 类型。</strong><br>我们需要让函数返回值是编译期能得到的常量，于是代码如下：<br><code>constexpr int pow(int base, int exp) noexcept {...};</code><br><code>std::array&lt;int, pow(3, 4)&gt; results；</code><br>这里需要说明，如果 base/exp 的值无法在编译期获得，那么 pow 函数将会在运行期执行，定义 results 就会报错</p>
-</li>
-<li><p>我们可以在定义 constexpr 成员函数：<br><code>class Point {</code><br><code>public:</code><br>&emsp;&emsp;<code>constexpr Point(double xVal = 0, double yVal = 0) noexcept : x(xVal), y(yVal)</code><br>&emsp;&emsp;<code>{}</code><br>&emsp;&emsp;<code>constexpr double xValue() const noexcept { return x; }</code><br>&emsp;&emsp;<code>constexpr double yValue() const noexcept { return y; }</code><br>&emsp;&emsp;<code>constexpr void setX(double newX) noexcept { x = newX; } // C++14</code><br>&emsp;&emsp;<code>constexpr void setY(double newY) noexcept { y = newY; } // C++14</code><br><code>private:</code><br>&emsp;&emsp;<code>double x, y;</code><br><code>};</code><br>由此我们可以直接在编译期做其他计算，比如计算中点：<br><code>constexpr Point midpoint(const Point&amp; p1, const Point&amp; p2) noexcept {</code><br>&emsp;&emsp;<code>return { (p1.xValue() + p2.xValue()) / 2, (p1.yValue() + p2.yValue()) / 2 };</code><br><code>}</code><br>许多计算在编译期完成，结果就是程序运行速度更快，且是在只读内存区完成的！（当然编译时间会增加就是了</p>
-</li>
-</ol>
-<h3 id="三、尽可能地使用-constexpr"><a href="#三、尽可能地使用-constexpr" class="headerlink" title="三、尽可能地使用 constexpr"></a>三、尽可能地使用 constexpr</h3><ol>
-<li>constexpr 的运用范围更广，如果是编译期可以得到的值，既可用于需要 constexpr 的场景，且加快了运行速度。    </li>
-<li>非编译期完成的计算，我们也不需要多写一份 non-constexpr 实现。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      <span id="busuanzi_container_page_pv">
-        |阅读量(<span id="busuanzi_value_page_pv"></span>)
-      </span>
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2023/05/29/【c++】学习constexpr/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-【c++】用一个例子串起「右值引用、引用折叠、转发」" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -266,6 +184,82 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2022/09/03/【c++】用一个例子串起「右值引用、引用折叠、转发」/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【c++】学习constexpr" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/05/29/【c++】学习constexpr/">【c++】学习constexpr</a>
+    </h1>
+  
+
+        
+        <a href="/2022/05/29/【c++】学习constexpr/" class="archive-article-date">
+  	<time datetime="2022-05-29T10:12:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、constexpr是什么"><a href="#一、constexpr是什么" class="headerlink" title="一、constexpr是什么"></a>一、constexpr是什么</h3><ol>
+<li>constexpr 用于定义常量表达式，是 C++11 引入的关键字，更重要的是 constexpr 定义的值会<strong>尽可能（详见二.2）</strong>在编译期完成计算，可以认为 constexpr 包含了 const。</li>
+<li>constexpr 不仅用于变量定义，还可以修饰函数。这部分在不同 C++ 标准中的宽容度不同。</li>
+<li>由于在编译期完成计算，它定义的变量位于<em>只读</em>内存中。</li>
+</ol>
+<h3 id="二、constexpr怎么用"><a href="#二、constexpr怎么用" class="headerlink" title="二、constexpr怎么用"></a>二、constexpr怎么用</h3><ol>
+<li><p>定义 constexpr 变量时，必须初始化且使用常量初始化。由于编译器确定了值，即 constexpr 是真常量，于是可以有如下代码：<br><code>constexpr auto arraySize = 10；</code><br><code>std::array&lt;int, arraySize&gt; data；</code> </p>
+</li>
+<li><p>从上述代码扩展一下，如果arraySize需要通过函数计算，我们可以怎么写？   </p>
+</li>
+</ol>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      <span id="busuanzi_container_page_pv">
+        |阅读量(<span id="busuanzi_value_page_pv"></span>)
+      </span>
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/05/29/【c++】学习constexpr/">展开全文 >></a>
         </p>
       
 

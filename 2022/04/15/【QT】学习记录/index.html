@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://homyeung.github.io">
-  <title>【QT】学习记录 | homYang&#39;s blog</title>
+  <title>【QT】一些记录 | homYang&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tony：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的一个qt 界面工程的编译      uic: 读.ui文件, 生成.h头文件给工程里面用     moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件     上面的cpp和工程里面其他非qt的cpp 一起走正常的编译">
+  <meta name="description" content="A：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的一个qt 界面工程的编译      uic: 读.ui文件, 生成.h头文件给工程里面用     moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件     上面的cpp和工程里面其他非qt的cpp 一起走正常的编译流程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【QT】学习记录">
+<meta property="og:title" content="【QT】一些记录">
 <meta property="og:url" content="https://homyeung.github.io/2022/04/15/【QT】学习记录/index.html">
 <meta property="og:site_name" content="homYang&#39;s blog">
-<meta property="og:description" content="Tony：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的一个qt 界面工程的编译      uic: 读.ui文件, 生成.h头文件给工程里面用     moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件     上面的cpp和工程里面其他非qt的cpp 一起走正常的编译">
+<meta property="og:description" content="A：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的一个qt 界面工程的编译      uic: 读.ui文件, 生成.h头文件给工程里面用     moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件     上面的cpp和工程里面其他非qt的cpp 一起走正常的编译流程">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2022-09-05T08:27:53.485Z">
+<meta property="og:updated_time" content="2023-06-03T10:21:26.337Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【QT】学习记录">
-<meta name="twitter:description" content="Tony：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的一个qt 界面工程的编译      uic: 读.ui文件, 生成.h头文件给工程里面用     moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件     上面的cpp和工程里面其他非qt的cpp 一起走正常的编译">
+<meta name="twitter:title" content="【QT】一些记录">
+<meta name="twitter:description" content="A：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的一个qt 界面工程的编译      uic: 读.ui文件, 生成.h头文件给工程里面用     moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件     上面的cpp和工程里面其他非qt的cpp 一起走正常的编译流程">
   
   
     <link rel="icon" href="/assets/yui.jpg">
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      【QT】学习记录
+      【QT】一些记录
     </h1>
   
 
@@ -166,25 +166,25 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>Tony</strong>：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的<br>一个qt 界面工程的编译    </p>
+        <p><strong>A</strong>：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的<br>一个qt 界面工程的编译    </p>
 <ol>
 <li>uic: 读.ui文件, 生成.h头文件给工程里面用    </li>
 <li>moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件    </li>
 <li>上面的cpp和工程里面其他非qt的cpp 一起走正常的编译流程    </li>
 </ol>
-<p><strong>问题</strong>：用了QMetaObject::connectSlotsByName() 不需要写connect   </p>
-<p><strong>Tony</strong>：功能上这么用可以. 实际的话    </p>
+<p><strong>Q</strong>：用了QMetaObject::connectSlotsByName() 不需要写connect   </p>
+<p><strong>A</strong>：功能上这么用可以. 实际的话    </p>
 <ol>
 <li>性能要看看    </li>
 <li>这种方法限制了槽函数名. 有些槽函数不是这个名的还是需要自己connect。<br>再有一个, 时机问题. qt这一层, 有一套父子关系机制. 调用这个函数的时候, 如果那个东西还不在它的家族里面, 那么后面进入家族的时候 应该也不会自动connect上。  </li>
 </ol>
 <a id="more"></a>
-<p><strong>作业1</strong>：写个继承了QObject的类加深一下印象. 类就实现按一下你刚才搞的东西的按钮的话 能弹个提示框出来. 弹框的话 调QMessageBox的静态方法随便搞个就行，需要手动connect的那种。<br>小要求    </p>
+<p><strong>入门1</strong>：写个继承了QObject的类加深一下印象. 类就实现按一下按钮 能弹个提示框出来. 弹框调QMessageBox的静态方法随便都行，需要手动connect的那种。<br>小要求    </p>
 <ol>
 <li>按两个按钮, 弹不同的框, 不同的框的connect需要用不同的使用方法, 一种是SIGNAL(), 另一种是直接函数名    </li>
 <li>槽函数需要至少一个参数  </li>
 </ol>
-<p><strong>作业2</strong>：搞个qt界面或控制台程序, 每输入一个数字回车之后 就跟上一个数字累加. 从0开始. 加法需要在线程里面完成。输入exit后能正常退出程序。线程资源也要管理好：别主线程要退了 加法线程还在运行</p>
+<p><strong>入门2</strong>：搞个qt界面或控制台程序, 每输入一个数字回车之后 就跟上一个数字累加. 从0开始. 加法需要在线程里面完成。输入exit后能正常退出程序。线程资源也要管理好：别主线程要退了 加法线程还在运行</p>
 
       
 

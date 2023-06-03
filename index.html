@@ -213,72 +213,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-test" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/06/03/test/">test</a>
-    </h1>
-  
-
-        
-        <a href="/2022/06/03/test/" class="archive-article-date">
-  	<time datetime="2022-06-03T10:13:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>test</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      <span id="busuanzi_container_page_pv">
-        |阅读量(<span id="busuanzi_value_page_pv"></span>)
-      </span>
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/06/03/test/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-【c++】学习constexpr" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -362,7 +296,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/04/15/【QT】学习记录/">【QT】学习记录</a>
+      <a class="article-title" href="/2022/04/15/【QT】学习记录/">【QT】一些记录</a>
     </h1>
   
 
@@ -375,14 +309,14 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>Tony</strong>：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的<br>一个qt 界面工程的编译    </p>
+        <p><strong>A</strong>：designer里面, 保存了之后, 它做的事情是生成一个.ui文件. 是xm格式的<br>一个qt 界面工程的编译    </p>
 <ol>
 <li>uic: 读.ui文件, 生成.h头文件给工程里面用    </li>
 <li>moc: 读.h头文件(包括uic生成的, 还有自己写的用上了qt元对象系统的头文件, 例如有个类继承了QObject), 生成.cpp文件    </li>
 <li>上面的cpp和工程里面其他非qt的cpp 一起走正常的编译流程    </li>
 </ol>
-<p><strong>问题</strong>：用了QMetaObject::connectSlotsByName() 不需要写connect   </p>
-<p><strong>Tony</strong>：功能上这么用可以. 实际的话    </p>
+<p><strong>Q</strong>：用了QMetaObject::connectSlotsByName() 不需要写connect   </p>
+<p><strong>A</strong>：功能上这么用可以. 实际的话    </p>
 <ol>
 <li>性能要看看    </li>
 <li>这种方法限制了槽函数名. 有些槽函数不是这个名的还是需要自己connect。<br>再有一个, 时机问题. qt这一层, 有一套父子关系机制. 调用这个函数的时候, 如果那个东西还不在它的家族里面, 那么后面进入家族的时候 应该也不会自动connect上。  </li>
@@ -545,83 +479,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="【c++】-【c++】一些我总是忘记的知识" class="article article-type-【c++】  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/03/15/【c++】一些我总是忘记的知识/">【c++】一些我总是忘记的知识</a>
-    </h1>
-  
-
-        
-        <a href="/2022/03/15/【c++】一些我总是忘记的知识/" class="archive-article-date">
-  	<time datetime="2022-03-15T01:52:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1、strlen() 和 sizeof</p>
-<ul>
-<li><p>std::size_t strlen( const char* str ); return The length of the null-terminated string str.</p>
-</li>
-<li><p>sizeof operator; Queries size of the object or type.</p>
-</li>
-</ul>
-<p>2、align</p>
-<p>3、重载overload 和 重写override</p>
-<ul>
-<li>由于函数签名不包括返回值，所以重载不需要关心返回值。重载的要求是：参数个数、参数类型、是否const</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      <span id="busuanzi_container_page_pv">
-        |阅读量(<span id="busuanzi_value_page_pv"></span>)
-      </span>
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/03/15/【c++】一些我总是忘记的知识/">展开全文 >></a>
         </p>
       
 
@@ -841,6 +698,151 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2022/01/01/元旦与友人吃KFC时的闲聊/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="【c++】-【c++】一些我总是忘记的知识" class="article article-type-【c++】  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/15/【c++】一些我总是忘记的知识/">【c++】一些知识简单笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/15/【c++】一些我总是忘记的知识/" class="archive-article-date">
+  	<time datetime="2021-03-15T01:52:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、strlen() 和 sizeof</p>
+<ul>
+<li><p>std::size_t strlen( const char* str ); return The length of the null-terminated string str.</p>
+</li>
+<li><p>sizeof operator; Queries size of the object or type.</p>
+</li>
+</ul>
+<p>2、align</p>
+<p>3、重载overload 和 重写override</p>
+<ul>
+<li>由于函数签名不包括返回值，所以重载不需要关心返回值。重载的要求是：参数个数、参数类型、是否const</li>
+</ul>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      <span id="busuanzi_container_page_pv">
+        |阅读量(<span id="busuanzi_value_page_pv"></span>)
+      </span>
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/15/【c++】一些我总是忘记的知识/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-PE" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/09/PE/">PE</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/09/PE/" class="archive-article-date">
+  	<time datetime="2019-02-09T04:44:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Win16平台上可执行文件是NE，在Win32平台上是PE（Portable Executable File Format）。EXE文件和DLL文件的区别是语义上的，它们使用相同的PE格式，仅用一个字段标识文件是EXE或DLL。<br><img src="/Users/homyang/Hexo/source/_posts/1.jpg" alt=""></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>PE文件使用一个平面地址空间，所有代码和数据合并一起，文件内容分割为不同区块，各个区块按页边界对齐。<br>PE文件不是作为单一内存映射文件被载入内存。Windows加载器遍历PE文件并决定文件哪一部分被映射，映射方式是将文件较高偏移位置映射到较高的内存地址中。载入内存后，磁盘和内存中的数据结构布局一致，但数据之间的相对位置可能会改变。</p>
+<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><h4 id="1、区块表"><a href="#1、区块表" class="headerlink" title="1、区块表"></a>1、区块表</h4><p>PE文件头与原始数据之间的区块表，包含每个块在映像中的信息，分别指向不同区块。<br>区块表紧跟IMAGE_NT_HEADERS，是IMAGE_SECTION_HEADER数组。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      <span id="busuanzi_container_page_pv">
+        |阅读量(<span id="busuanzi_value_page_pv"></span>)
+      </span>
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/09/PE/">展开全文 >></a>
         </p>
       
 

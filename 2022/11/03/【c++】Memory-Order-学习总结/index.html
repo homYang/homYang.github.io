@@ -6,22 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://homyeung.github.io">
-  <title>【Algorithms】排序算法总结 | homYang&#39;s blog</title>
+  <title>【C++】Memory Order 学习总结 | homYang&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊 以下排序算法总结的先后次序，根据使用（面试）频率从高到低排 快速排序（不稳定，nlogn，in-place）1、基本思想：选取start作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition(">
+  <meta name="description" content="一、为什么需要内存模型C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。 二、前置知识 Modification orders     单一原子变量拥有它自己的全局的修改顺序，也就是说在 A 线程看到 x 变量先读后写，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Algorithms】排序算法总结">
-<meta property="og:url" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/index.html">
+<meta property="og:title" content="【C++】Memory Order 学习总结">
+<meta property="og:url" content="https://homyeung.github.io/2022/11/03/【c++】Memory-Order-学习总结/index.html">
 <meta property="og:site_name" content="homYang&#39;s blog">
-<meta property="og:description" content="各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊 以下排序算法总结的先后次序，根据使用（面试）频率从高到低排 快速排序（不稳定，nlogn，in-place）1、基本思想：选取start作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition(">
+<meta property="og:description" content="一、为什么需要内存模型C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。 二、前置知识 Modification orders     单一原子变量拥有它自己的全局的修改顺序，也就是说在 A 线程看到 x 变量先读后写，">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/quicksort.jpg">
-<meta property="og:image" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/quickselect.jpg">
-<meta property="og:updated_time" content="2022-09-05T08:26:39.003Z">
+<meta property="og:updated_time" content="2023-06-06T17:14:09.372Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Algorithms】排序算法总结">
-<meta name="twitter:description" content="各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊 以下排序算法总结的先后次序，根据使用（面试）频率从高到低排 快速排序（不稳定，nlogn，in-place）1、基本思想：选取start作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition(">
-<meta name="twitter:image" content="https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/quicksort.jpg">
+<meta name="twitter:title" content="【C++】Memory Order 学习总结">
+<meta name="twitter:description" content="一、为什么需要内存模型C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。 二、前置知识 Modification orders     单一原子变量拥有它自己的全局的修改顺序，也就是说在 A 线程看到 x 变量先读后写，">
   
   
     <link rel="icon" href="/assets/yui.jpg">
@@ -149,39 +146,175 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-【Algorithms】排序算法总结" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-【c++】Memory-Order-学习总结" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      【Algorithms】排序算法总结
+      【C++】Memory Order 学习总结
     </h1>
   
 
         
-        <a href="/2022/04/07/【Algorithms】排序算法总结/" class="archive-article-date">
-  	<time datetime="2022-04-07T04:17:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-07</time>
+        <a href="/2022/11/03/【c++】Memory-Order-学习总结/" class="archive-article-date">
+  	<time datetime="2022-11-03T13:46:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-11-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <pre><code>各种排序算法，每次学的时候觉得这次肯定懂了，几个月后写代码却又阿巴阿巴。尝试自己总结一次，看看几个月后病情会不会好转（😊
-</code></pre><p>以下排序算法总结的先后次序，根据使用（面试）频率从高到低排</p>
-<h3 id="快速排序（不稳定，nlogn，in-place）"><a href="#快速排序（不稳定，nlogn，in-place）" class="headerlink" title="快速排序（不稳定，nlogn，in-place）"></a>快速排序（不稳定，nlogn，in-place）</h3><p>1、基本思想：选取<code>start</code>作为基准pivot，设计 partition 函数：将数据分为【小于pivot，pivot，大于pivot】。递归调用 partition()，分别对基准两边进行快速排序。  </p>
-<p>2、复杂度：<br>· nlogn<br>· 最坏情况即数据有序的情况下，每次分区都只分出一个1和n-1，时间复杂度n^2。   </p>
-<p>3、partition() 具体实现：<code>i</code>从start+1出发，指向大于基准的数据位置；<code>j</code>从end出发，指向小于基准的数据位置。交换<code>i</code>和<code>j</code>指向的数据。重复以上动作，直到<code>i&gt;=j</code>。<strong>最后 j 指向的是左边区域最后一个小于基准的数，所以交换 start 和 j 位置的数据，实现了左小右大的局面。start &gt;= end 时不再进入 partition()</strong>。注意边界条件！！    </p>
+        <h3 id="一、为什么需要内存模型"><a href="#一、为什么需要内存模型" class="headerlink" title="一、为什么需要内存模型"></a>一、为什么需要内存模型</h3><p>C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。<br>因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。</p>
+<h3 id="二、前置知识"><a href="#二、前置知识" class="headerlink" title="二、前置知识"></a>二、前置知识</h3><ol>
+<li>Modification orders    <ul>
+<li>单一原子变量拥有它自己的全局的修改顺序，也就是说在 A 线程看到 x 变量先读后写，那么B线程也必然看到这一顺序。这就是变量的<em>修改顺序一致性</em>    </li>
+<li>非原子变量的修改顺序一致性，需要程序员自己保证</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li>Sequenced-before    <ul>
+<li>单线程中，operation A 在 operation B 之前完成计算，则称 A sequenced-before B     </li>
+<li>Sequenced-before 具有传递性</li>
+</ul>
+</li>
+</ol>
 <a id="more"></a>
-<p>4、优化：<br>· 排序前先shuffle待排序数组<br>· 哨兵。去掉边界条件的判断<br>· 小数组切换到插入排序<br>· 三取样切分  </p>
-<p><img src="quicksort.jpg" width="700" height="525">   </p>
-<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><p>代码<code>j==lo</code>的判断其实是冗余的，因为只有<code>a[j]&gt;a[lo]</code>时，<code>j</code>才会递减。当<code>j</code>到达<code>lo</code>时必定停止移动。<br>若想去掉<code>i==hi</code>到判断，需要在<code>shuffle</code>后把数组最大值放到<code>hi</code>位置。<code>i</code>从<code>lo</code>出发时不必担心跑出<code>hi</code>，因为<code>i</code>只有比基准小才会递增，所以遇到<code>hi</code>时<code>i</code>必定停止移动。<br>子数组处理：右边部分的第一个值可以作为左边部分的<code>hi</code></p>
-<h4 id="常见应用：find-top-k"><a href="#常见应用：find-top-k" class="headerlink" title="常见应用：find top k"></a>常见应用：find top k</h4><p><img src="quickselect.jpg" width="700" height="525"></p>
-<h3 id="归并排序（稳定，nlogn）"><a href="#归并排序（稳定，nlogn）" class="headerlink" title="归并排序（稳定，nlogn）"></a>归并排序（稳定，nlogn）</h3><p>1、基本思想：如何排序一个数组，假设数组分为左右两个子数组，且子数组已排好序，那么有序合并两个子数组，任务就完成了。这个假设中，两个子数组如何有序的问题跟原始问题一致。因此可以递归解决子问题，即<strong>分别排序左右子数组，合并两个子数组</strong>。<br><code>// merge a[lo..mid] and a[mid+1..hi]</code><br><code>void merge(const vector&lt;int&gt;&amp; a, int lo, int mid, int hi) {</code><br>&emsp;&emsp;<code>vector&lt;int&gt; aux(a);</code><br>&emsp;&emsp;<code>int i = lo; int j = mid+1;</code><br>&emsp;&emsp;<code>for(int k = 0; k &lt;= hi; ++k) {</code><br>&emsp;&emsp;&emsp;&emsp;<code>if(i &gt; mid) aux[k] = a[j++];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else if(j &gt; hi)  aux[k] = a[i++];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else if(a[i] &lt; a[j]) aux[k] = a[i++];</code><br>&emsp;&emsp;&emsp;&emsp;<code>else aux[k] = a[j++];</code><br>&emsp;&emsp;<code>}</code><br><code>}</code>    </p>
-<p>2、递归（自顶向下）方法，空间复杂度除了辅助数组外，还有<code>logn</code>的调用栈深度    </p>
-<p>3、自底向上方法可以节约调用栈的空间消耗。每次两两归并，再四四归并，再八八归并，一直下去。</p>
+<ol start="3">
+<li>Synchronizes-with<br>线程 A 对一个原子变量的写操作，在线程 B 读取的时候可见，称 A 的写操作 synchronizes-with B 的读操作</li>
+</ol>
+<ol start="4">
+<li><p>Inter-thread happens-before<br>不同线程中，以下情况都是 evaluation A inter-thread happens-before evaluation B：</p>
+<ol>
+<li>A synchronizes-with B  </li>
+<li>A dependency-ordered before B </li>
+<li>A synchronizes-with X，且 X sequenced-before B</li>
+<li>A sequenced-before X，且 X inter-thread happens-before B</li>
+<li>A inter-thread happens-before X，且 X inter-thread happens-before B</li>
+</ol>
+</li>
+<li><p>Dependency-ordered before<br>此概念由 memory-order-consume 引入，这个定义跟 inter-thread happens-before 仅有细微差别    </p>
+<ul>
+<li>单线程下，evaluation A 的计算结果作为 evaluation B 的操作数，则 A carries a denpendency to B  </li>
+<li><p>多线程下，A carries a denpendency to B 称为 A dependency-ordered before B       </p>
+<p>特性：<br>设存在原子变量 M<br>(1) A 对 M 执行 release 写操作，另一个线程中，B 对 M 执行 consume 读时，并且 B 读的值是 A 写的，称 A dependency-ordered before B<br>(2) A is dependency-ordered-before B, 则 A inter-thread happens-before B</p>
+</li>
+</ul>
+</li>
+<li><p>Visible side-effects<br>A 的副作用对于 B 可见，意思是 B 读取 scalar M 的值时，看到了 A 对 scalar M 的写操作</p>
+</li>
+</ol>
+<h3 id="三、atomic-定义的-memory-order"><a href="#三、atomic-定义的-memory-order" class="headerlink" title="三、atomic 定义的 memory_order"></a>三、atomic 定义的 memory_order</h3><blockquote>
+<p>store 操作：memory_order_relaxed、memory_order_release、 memory_order_seq_rel、</p>
+<p>load 操作：memory_order_relaxed、momory_order_consume、memory_order_acquire、memory_order_seq_rel</p>
+<p>read-modify-write 操作: 以下全部</p>
+</blockquote>
+<ol>
+<li><p>memory_order_relaxed  </p>
+<ul>
+<li>不保证同步，也没有读写顺序限制</li>
+<li>只保证操作的原子性</li>
+</ul>
+</li>
+<li><p>memory_order_acquire</p>
+<ul>
+<li>load 操作时，当前线程所有读写操作<strong>不能乱序到我前面</strong></li>
+<li><strong>Mutex lock()</strong> 是 acquire 操作</li>
+</ul>
+</li>
+<li><p>memory_order_consume</p>
+<ul>
+<li>load 操作时，当前线程所有依赖当前 load 的变量的读写操作<strong>不能乱序到我前面</strong></li>
+<li>在大多数平台，我只影响编译器优化</li>
+<li>引入了 data-dependency</li>
+<li>C++17 标准正在修订，建议暂时不要使用 memory_order_consume</li>
+</ul>
+</li>
+<li><p>memory_order_release    </p>
+<ul>
+<li>store 操作时，当前线程所有读写操作<strong>不能乱序到我后面</strong></li>
+<li><strong>Mutex unlock()</strong> 是 release 操作</li>
+<li>设某原子变量为 x，我对 x 写操作，存在：<ul>
+<li>其他线程 acquire x 时，可看到 当前线程 对 x 的写操作 </li>
+<li>其他线程 consume x 时，可看到 当前线程 对 <em>与x有依赖关系的变量</em> 的写操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>memory_order_acq_rel</p>
+<ul>
+<li>read-modify-write 操作时，兼具了 aqcuire 和 release 操作</li>
+</ul>
+</li>
+<li><p>memory_order_seq_rel</p>
+<ul>
+<li>用在 load 操作时，表现为 acquire</li>
+<li>用在 store 操作时，表现为 release</li>
+<li>用在 read-modify-write 操作时，兼具了 aqcuire 和 release 操作</li>
+</ul>
+</li>
+</ol>
+<h3 id="四、内存模型"><a href="#四、内存模型" class="headerlink" title="四、内存模型"></a>四、内存模型</h3><ol>
+<li><p>Sequentially-consistent ordering （顺序一致性）  </p>
+<ul>
+<li>特点<ol>
+<li>具有全局一致的执行顺序：若 Thread 1 看到的执行顺序若是 ABCD，Thread 2 必然看到 ABCD</li>
+<li>原子操作的默认行为，性能不友好</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Relaxed ordering    </p>
+<ul>
+<li>特点：不同步数据，不限制执行顺序，仅保证 <strong>原子性 &amp; 修改顺序一致性</strong>    </li>
+<li><p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Thread 1:    </span><br><span class="line">r1 = y.load(std::memory_order_relaxed); // A    </span><br><span class="line">x.store(r1, std::memory_order_relaxed); // B    </span><br><span class="line">// Thread 2:    </span><br><span class="line">r2 = x.load(std::memory_order_relaxed); // C     </span><br><span class="line">y.store(42, std::memory_order_relaxed); // D</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>* 保证了修改顺序一致性：若 Thread 1 看到的执行顺序是 ABCD，Thread 2 只能看到 A 在 D 之前，B 在 C 之前，即不可能存在DACB。
+* 由于不保证 happens-before，Thread 1 有可能看到 D 在 A 之前执行，所以 r1 = r2 = 42 是可能存在的。
+
+&gt; 最经典的 relaxed 模型：std::shared_ptr 的引用计数
+</code></pre><ol start="3">
+<li><p>Release-Acquire ordering    </p>
+<ul>
+<li><p>特点：对同一个原子变量，线程 A 用 memory_order_release store，线程 B 用 memory_order_acquire load</p>
+<ol>
+<li>对此原子变量，A synchronizes-with B</li>
+<li>A 在 store 之前（happened-before）的所有（包括非原子和relaxed原子）写操作，B 都可见</li>
+</ol>
+<blockquote>
+<p>常见的 Release-Acquire 模型：Mutual exclusion locks, 如 std::mutex、atomic spinlock</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Release-Consume ordering （C++17 标准说不推荐使用）</p>
+<ul>
+<li><p>特点：Release-Consume ordering 是 Release-Acquire ordering 的部分实现</p>
+<p>  两者的不同之处在于，当对同一个原子变量 M 读写时：<br>  Release-Acquire ordering：A 在 store 之前（happened-before）的所有（包括非原子和relaxed原子）写操作，B 都可见<br>  Release-Consume ordering：A store 的所有（包括非原子和relaxed原子）写操作，B 只能看到与 M 相关的变量的修改   </p>
+</li>
+<li><p>cppref 的例子：由于 data 和 Release-Consume 读写的 ptr 没有依赖关系，consumer() 不一定能看到 <code>data = 42；</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">std::atomic&lt;std::string*&gt; ptr;</span><br><span class="line">int data;</span><br><span class="line">void producer()</span><br><span class="line">&#123;</span><br><span class="line">    std::string* p  = new std::string(&quot;Hello&quot;);</span><br><span class="line">    data = 42;</span><br><span class="line">    ptr.store(p, std::memory_order_release);</span><br><span class="line">&#125;</span><br><span class="line">void consumer()</span><br><span class="line">&#123;</span><br><span class="line">    std::string* p2;</span><br><span class="line">    while (!(p2 = ptr.load(std::memory_order_consume)))</span><br><span class="line">        ;</span><br><span class="line">    assert(*p2 == &quot;Hello&quot;); // never fires: *p2 carries dependency from ptr</span><br><span class="line">    assert(data == 42); // may or may not fire: data does not carry dependency from ptr</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    std::thread t1(producer);</span><br><span class="line">    std::thread t2(consumer);</span><br><span class="line">    t1.join(); t2.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="五、与内存模型结合的一些重要的特性"><a href="#五、与内存模型结合的一些重要的特性" class="headerlink" title="五、与内存模型结合的一些重要的特性"></a>五、与内存模型结合的一些重要的特性</h3><ul>
+<li><p>Release sequence  </p>
+<ul>
+<li>线程 A release store 原子变量 M，在此之后的所有对 M 的 <strong>RMW</strong> 操作，都会同步到其他线程 load M 的时候    </li>
+<li>意义：不需要在多个读线程之间实现同步</li>
+<li>cppref 的例子：compare_exchange_strong 是 RMW 操作，不管是使用哪种 memory order，thread_2 对 flag 的修改都会同步到 thread_3</li>
+</ul>
+</li>
+</ul>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;int&gt; data;</span><br><span class="line">std::atomic&lt;int&gt; flag = &#123;0&#125;;</span><br><span class="line">void thread_1()</span><br><span class="line">&#123;</span><br><span class="line">    data.push_back(42);</span><br><span class="line">    flag.store(1, std::memory_order_release);</span><br><span class="line">&#125;</span><br><span class="line">void thread_2()</span><br><span class="line">&#123;</span><br><span class="line">    int expected=1;</span><br><span class="line">    // memory_order_relaxed is okay because this is an RMW,</span><br><span class="line">    // and RMWs (with any ordering) following a release form a release sequence</span><br><span class="line">    while (!flag.compare_exchange_strong(expected, 2, std::memory_order_relaxed)) &#123;</span><br><span class="line">        expected = 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">void thread_3()</span><br><span class="line">&#123;</span><br><span class="line">    while (flag.load(std::memory_order_acquire) &lt; 2)</span><br><span class="line">        ;</span><br><span class="line">    // if we read the value 2 from the atomic flag, we see 42 in the vector</span><br><span class="line">    assert(data.at(0) == 42); // will never fire</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    std::thread a(thread_1);</span><br><span class="line">    std::thread b(thread_2);</span><br><span class="line">    std::thread c(thread_3);</span><br><span class="line">    a.join(); b.join(); c.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><p>参考来源：<a href="https://en.cppreference.com/w/cpp/atomic/memory_order" target="_blank" rel="noopener">https://en.cppreference.com/w/cpp/atomic/memory_order</a><br>&emsp;&emsp;《C++ Concurrency in Action by Anthony Williams》</p>
 
       
 
@@ -241,7 +374,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://homyeung.github.io/2022/04/07/【Algorithms】排序算法总结/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://homyeung.github.io/2022/11/03/【c++】Memory-Order-学习总结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -255,18 +388,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2022/09/03/【c++】用一个例子串起「右值引用、引用折叠、转发」/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          【C++】用一个例子串起「右值引用、引用折叠、转发」
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/03/20/【Algorithms】我对动态规划的理解Ⅰ/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【Algorithms】我对动态规划的理解Ⅰ</div>
+    <a href="/2022/09/03/【c++】用一个例子串起「右值引用、引用折叠、转发」/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【C++】用一个例子串起「右值引用、引用折叠、转发」</div>
       <i class="icon-circle-right"></i>
     </a>
   

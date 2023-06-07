@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="homYang&#39;s blog">
 <meta property="og:description" content="一、为什么需要内存模型C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。 二、前置知识1、 Modification orders     &amp;emsp;&amp;emsp;• 单一原子变量拥有它自己的全局的修改顺序，也就是说在">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2023-06-07T07:39:21.426Z">
+<meta property="og:updated_time" content="2023-06-07T07:43:43.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【C++】Memory Order 学习总结">
 <meta name="twitter:description" content="一、为什么需要内存模型C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。 二、前置知识1、 Modification orders     &amp;emsp;&amp;emsp;• 单一原子变量拥有它自己的全局的修改顺序，也就是说在">
@@ -205,9 +205,10 @@ var _hmt = _hmt || [];
 </blockquote>
 <p>4、Release-Consume ordering （C++17 标准说不推荐使用）<br>   &emsp;&emsp;• 特点：Release-Consume ordering 是 Release-Acquire ordering 的部分实现</p>
 <p>   &emsp;&emsp;两者的不同之处在于，当对同一个原子变量 M 读写时：<br>   &emsp;&emsp;&emsp;&emsp;Release-Acquire ordering：A 在 store 之前（happened-before）的所有（包括非原子和relaxed原子）写操作，B 都可见<br>    &emsp;&emsp;&emsp;&emsp;Release-Consume ordering：A store 的所有（包括非原子和relaxed原子）写操作，B 只能看到与 M 相关的变量的修改   </p>
-<p>   &emsp;&emsp;• cppref 的例子：由于 data 和 Release-Consume 读写的 ptr 没有依赖关系，consumer() 不一定能看到 <code>data = 42；</code>  </p>
-<p>   &emsp;&emsp;若第 12 行代码是 <code>while (!(p2 = ptr.load(std::memory_order_acquire)))</code>，则第 15 行 never fire    ，因为 release store 之前的代码 happens-before acquire load  </p>
+<p>&emsp;&emsp;• cppref 的例子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">std::atomic&lt;std::string*&gt; ptr;</span><br><span class="line">int data;</span><br><span class="line">void producer()</span><br><span class="line">&#123;</span><br><span class="line">    std::string* p  = new std::string(&quot;Hello&quot;);</span><br><span class="line">    data = 42;</span><br><span class="line">    ptr.store(p, std::memory_order_release);</span><br><span class="line">&#125;</span><br><span class="line">void consumer()</span><br><span class="line">&#123;</span><br><span class="line">    std::string* p2;</span><br><span class="line">    while (!(p2 = ptr.load(std::memory_order_consume)))</span><br><span class="line">        ;</span><br><span class="line">    assert(*p2 == &quot;Hello&quot;); // never fires: *p2 carries dependency from ptr</span><br><span class="line">    assert(data == 42); // may or may not fire: data does not carry dependency from ptr</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    std::thread t1(producer);</span><br><span class="line">    std::thread t2(consumer);</span><br><span class="line">    t1.join(); t2.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;• 由于 data 和 Release-Consume 读写的 ptr 没有依赖关系，consumer() 不一定能看到 <code>data = 42；</code>  </p>
+<p>&emsp;&emsp;• 若第 12 行代码是 <code>while (!(p2 = ptr.load(std::memory_order_acquire)))</code>，则第 15 行 never fire    ，因为 release store 之前的代码 happens-before acquire load</p>
 <h3 id="五、与内存模型结合的一些重要的特性"><a href="#五、与内存模型结合的一些重要的特性" class="headerlink" title="五、与内存模型结合的一些重要的特性"></a>五、与内存模型结合的一些重要的特性</h3><ul>
 <li><p>Release sequence  </p>
 <ul>

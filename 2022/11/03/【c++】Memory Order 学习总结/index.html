@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="homYang&#39;s blog">
 <meta property="og:description" content="一、为什么需要内存模型C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。 二、前置知识1、 Modification orders     &amp;emsp;&amp;emsp;• 单一原子变量拥有它自己的全局的修改顺序，也就是说在">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2023-06-07T04:55:59.139Z">
+<meta property="og:updated_time" content="2023-06-07T07:39:21.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【C++】Memory Order 学习总结">
 <meta name="twitter:description" content="一、为什么需要内存模型C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。 二、前置知识1、 Modification orders     &amp;emsp;&amp;emsp;• 单一原子变量拥有它自己的全局的修改顺序，也就是说在">
@@ -169,120 +169,49 @@ var _hmt = _hmt || [];
         <h3 id="一、为什么需要内存模型"><a href="#一、为什么需要内存模型" class="headerlink" title="一、为什么需要内存模型"></a>一、为什么需要内存模型</h3><p>C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。<br>因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。</p>
 <h3 id="二、前置知识"><a href="#二、前置知识" class="headerlink" title="二、前置知识"></a>二、前置知识</h3><p>1、 Modification orders    </p>
 <p>&emsp;&emsp;• 单一原子变量拥有它自己的全局的修改顺序，也就是说在 A 线程看到 x 变量先读后写，那么B线程也必然看到这一顺序。这就是变量的<em>修改顺序一致性</em><br>&emsp;&emsp;• 非原子变量的修改顺序一致性，需要程序员自己保证</p>
-<p>2、 Sequenced-before    </p>
-<p>&emsp;&emsp;• 单线程中，operation A 在 operation B 之前完成计算，则称 A sequenced-before B<br>&emsp;&emsp;• Sequenced-before 具有传递性</p>
+<p>2、 Synchronizes-with   </p>
+<p>&emsp;&emsp;线程 A 对一个原子变量的写操作，在线程 B 读取的时候可见，称 A 的写操作 synchronizes-with B 的读操作</p>
 <a id="more"></a>
-<p>3、 Synchronizes-with   </p>
-<p>&emsp;&emsp; 线程 A 对一个原子变量的写操作，在线程 B 读取的时候可见，称 A 的写操作 synchronizes-with B 的读操作</p>
+<p>3、 Sequenced-before    </p>
+<p>&emsp;&emsp;• 单线程中，operation A 在 operation B 之前完成计算，则称 A sequenced-before B<br>&emsp;&emsp;• Sequenced-before 具有传递性</p>
 <p>4、 Inter-thread happens-before<br>&emsp;&emsp;不同线程中，以下情况都是 evaluation A inter-thread happens-before evaluation B：</p>
-<p>&emsp;&emsp;1. A synchronizes-with B<br>&emsp;&emsp;2. A dependency-ordered before B<br>&emsp;&emsp;3. A synchronizes-with X，且 X sequenced-before B<br>&emsp;&emsp;4. A sequenced-before X，且 X inter-thread happens-before B<br>&emsp;&emsp;5. A inter-thread happens-before X，且 X inter-thread happens-before B  </p>
-<p>5、 Dependency-ordered before<br> 此概念由 memory-order-consume 引入，这个定义跟 inter-thread happens-before 仅有细微差别     </p>
+<p>&emsp;&emsp;(1) A synchronizes-with B<br>&emsp;&emsp;(2) A dependency-ordered before B<br>&emsp;&emsp;(3) A synchronizes-with X，且 X sequenced-before B<br>&emsp;&emsp;(4) A sequenced-before X，且 X inter-thread happens-before B<br>&emsp;&emsp;(5) A inter-thread happens-before X，且 X inter-thread happens-before B  </p>
+<p>5、 Dependency-ordered before<br>&emsp;&emsp;此概念由 memory-order-consume 引入，这个定义跟 inter-thread happens-before 仅有细微差别     </p>
 <p>&emsp;&emsp;• 单线程下，evaluation A 的计算结果作为 evaluation B 的操作数，则 A carries a denpendency to B<br>&emsp;&emsp;• 多线程下，A carries a denpendency to B 称为 A dependency-ordered before B       </p>
-<p>&emsp;&emsp;特性：<br>&emsp;&emsp;设存在原子变量 M<br>&emsp;&emsp;(1) A 对 M 执行 release 写操作，另一个线程中，B 对 M 执行 consume 读时，并且 B 读的值是 A 写的，称 A dependency-ordered before B<br>&emsp;&emsp;(2) A is dependency-ordered-before B, 则 A inter-thread happens-before B</p>
+<p>&emsp;&emsp;特性：<br>&emsp;&emsp;设存在原子变量 M<br>&emsp;&emsp;(1) A 对 M 执行 release 操作，另一个线程中，B 对 M 执行 consume 操作，且 B 读取了 A 写的值，称 A dependency-ordered before B<br>&emsp;&emsp;(2) A is dependency-ordered-before B, 则 A inter-thread happens-before B</p>
 <p>6、 Visible side-effects    </p>
 <p>&emsp;&emsp;A 的副作用对于 B 可见，意思是 B 读取 scalar M 的值时，看到了 A 对 scalar M 的写操作</p>
 <h3 id="三、atomic-定义的-memory-order"><a href="#三、atomic-定义的-memory-order" class="headerlink" title="三、atomic 定义的 memory_order"></a>三、atomic 定义的 memory_order</h3><blockquote>
-<p>store 操作：memory_order_relaxed、memory_order_release、 memory_order_seq_rel、</p>
-<p>load 操作：memory_order_relaxed、momory_order_consume、memory_order_acquire、memory_order_seq_rel</p>
+<p>store 操作：memory_order_relaxed、memory_order_release、 memory_order_seq_cst</p>
+<p>load 操作：memory_order_relaxed、momory_order_consume、memory_order_acquire、memory_order_seq_cst</p>
 <p>read-modify-write 操作: 以下全部</p>
 </blockquote>
-<ol>
-<li><p>memory_order_relaxed  </p>
-<ul>
-<li>不保证同步，也没有读写顺序限制</li>
-<li>只保证操作的原子性</li>
-</ul>
-</li>
-<li><p>memory_order_acquire</p>
-<ul>
-<li>load 操作时，当前线程所有读写操作<strong>不能乱序到我前面</strong></li>
-<li><strong>Mutex lock()</strong> 是 acquire 操作</li>
-</ul>
-</li>
-<li><p>memory_order_consume</p>
-<ul>
-<li>load 操作时，当前线程所有依赖当前 load 的变量的读写操作<strong>不能乱序到我前面</strong></li>
-<li>在大多数平台，我只影响编译器优化</li>
-<li>引入了 data-dependency</li>
-<li>C++17 标准正在修订，建议暂时不要使用 memory_order_consume</li>
-</ul>
-</li>
-<li><p>memory_order_release    </p>
-<ul>
-<li>store 操作时，当前线程所有读写操作<strong>不能乱序到我后面</strong></li>
-<li><strong>Mutex unlock()</strong> 是 release 操作</li>
-<li>设某原子变量为 x，我对 x 写操作，存在：<ul>
-<li>其他线程 acquire x 时，可看到 当前线程 对 x 的写操作 </li>
-<li>其他线程 consume x 时，可看到 当前线程 对 <em>与x有依赖关系的变量</em> 的写操作</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>memory_order_acq_rel</p>
-<ul>
-<li>read-modify-write 操作时，兼具了 aqcuire 和 release 操作</li>
-</ul>
-</li>
-<li><p>memory_order_seq_rel</p>
-<ul>
-<li>用在 load 操作时，表现为 acquire</li>
-<li>用在 store 操作时，表现为 release</li>
-<li>用在 read-modify-write 操作时，兼具了 aqcuire 和 release 操作</li>
-</ul>
-</li>
-</ol>
-<h3 id="四、内存模型"><a href="#四、内存模型" class="headerlink" title="四、内存模型"></a>四、内存模型</h3><ol>
-<li><p>Sequentially-consistent ordering （顺序一致性）  </p>
-<ul>
-<li>特点<ol>
-<li>具有全局一致的执行顺序：若 Thread 1 看到的执行顺序若是 ABCD，Thread 2 必然看到 ABCD</li>
-<li>原子操作的默认行为，性能不友好</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>Relaxed ordering    </p>
-<ul>
-<li>特点：不同步数据，不限制执行顺序，仅保证 <strong>原子性 &amp; 修改顺序一致性</strong>    </li>
-<li><p>例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Thread 1:    </span><br><span class="line">r1 = y.load(std::memory_order_relaxed); // A    </span><br><span class="line">x.store(r1, std::memory_order_relaxed); // B    </span><br><span class="line">// Thread 2:    </span><br><span class="line">r2 = x.load(std::memory_order_relaxed); // C     </span><br><span class="line">y.store(42, std::memory_order_relaxed); // D</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<pre><code>* 保证了修改顺序一致性：若 Thread 1 看到的执行顺序是 ABCD，Thread 2 只能看到 A 在 D 之前，B 在 C 之前，即不可能存在DACB。
-* 由于不保证 happens-before，Thread 1 有可能看到 D 在 A 之前执行，所以 r1 = r2 = 42 是可能存在的。
-
-&gt; 最经典的 relaxed 模型：std::shared_ptr 的引用计数
-</code></pre><ol start="3">
-<li><p>Release-Acquire ordering    </p>
-<ul>
-<li><p>特点：对同一个原子变量，线程 A 用 memory_order_release store，线程 B 用 memory_order_acquire load</p>
-<ol>
-<li>对此原子变量，A synchronizes-with B</li>
-<li>A 在 store 之前（happened-before）的所有（包括非原子和relaxed原子）写操作，B 都可见</li>
-</ol>
+<p>1、memory_order_relaxed<br>&emsp;&emsp;• 不保证同步，也没有读写顺序限制<br>&emsp;&emsp;• 只保证操作的原子性</p>
+<p>2、memory_order_acquire<br>&emsp;&emsp;• load 操作时，当前线程所有读写操作<strong>不能乱序到我前面</strong><br>&emsp;&emsp;• <strong>Mutex lock()</strong> 是 acquire 操作</p>
+<p>3、memory_order_consume<br>    &emsp;&emsp;• load 操作时，当前线程所有依赖当前 load 的变量的读写操作<strong>不能乱序到我前面</strong><br>    &emsp;&emsp;• 在大多数平台，我只影响编译器优化<br>    &emsp;&emsp;• 引入了 data-dependency<br>    &emsp;&emsp;• C++17 标准正在修订，建议暂时不要使用 memory_order_consume</p>
+<p>4、memory_order_release<br>    &emsp;&emsp;• store 操作时，当前线程所有读写操作<strong>不能乱序到我后面</strong><br>    &emsp;&emsp;• <strong>Mutex unlock()</strong> 是 release 操作<br>    &emsp;&emsp;• 设某原子变量为 x，我对 x 写操作，存在：<br>    &emsp;&emsp;&emsp;&emsp;- 其他线程 acquire x 时，可看到 当前线程 对 x 的写操作<br>    &emsp;&emsp;&emsp;&emsp;- 其他线程 consume x 时，可看到 当前线程 对 <em>与x有依赖关系的变量</em> 的写操作</p>
+<p>5、memory_order_acq_rel<br>    &emsp;&emsp;• read-modify-write 操作时，兼具了 aqcuire 和 release 操作</p>
+<p>6、memory_order_seq_cst<br>    &emsp;&emsp;• 用在 load 操作时，表现为 acquire<br>    &emsp;&emsp;• 用在 store 操作时，表现为 release<br>    &emsp;&emsp;• 用在 read-modify-write 操作时，兼具了 aqcuire 和 release 操作</p>
+<h3 id="四、内存模型"><a href="#四、内存模型" class="headerlink" title="四、内存模型"></a>四、内存模型</h3><p>1、Sequentially-consistent ordering （顺序一致性）<br>    &emsp;&emsp;• 特点<br>    &emsp;&emsp;(1) 具有全局一致的执行顺序：若 Thread 1 看到的执行顺序若是 ABCD，Thread 2 必然看到 ABCD<br>    &emsp;&emsp;(2) 原子操作的默认行为，性能不友好</p>
+<p>2、Relaxed ordering<br>    &emsp;&emsp;• 特点：不同步数据，不限制执行顺序，仅保证 <strong>原子性 &amp; 修改顺序一致性</strong><br>    &emsp;&emsp;• cppref 的例子：    </p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// Thread 1:    </span><br><span class="line">r1 = y.load(std::memory_order_relaxed); // A    </span><br><span class="line">x.store(r1, std::memory_order_relaxed); // B    </span><br><span class="line">// Thread 2:    </span><br><span class="line">r2 = x.load(std::memory_order_relaxed); // C     </span><br><span class="line">y.store(42, std::memory_order_relaxed); // D</span><br></pre></td></tr></table></figure>
+</code></pre><p>   &emsp;&emsp;• 保证了修改顺序一致性：若 Thread 1 看到的执行顺序是 ABCD，Thread 2 只能看到 A 在 D 之前，B 在 C 之前，即不可能存在DACB。<br>   &emsp;&emsp;• 由于不保证 happens-before，Thread 1 有可能看到 D 在 A 之前执行，所以 r1 = r2 = 42 是可能存在的。</p>
+<blockquote>
+<p>最经典的 relaxed 模型用法是<code>增加引用计数</code>，比如 std::shared_ptr</p>
+</blockquote>
+<p>3、Release-Acquire ordering<br>    &emsp;&emsp;• 特点：对同一个原子变量，线程 A 用 memory_order_release store，线程 B 用 memory_order_acquire load<br>    &emsp;&emsp;&emsp;&emsp;(1) 对此原子变量，A synchronizes-with B<br>    &emsp;&emsp;&emsp;&emsp;(2) A 在 store 之前（happened-before）的所有（包括非原子和relaxed原子）写操作，B 都可见</p>
 <blockquote>
 <p>常见的 Release-Acquire 模型：Mutual exclusion locks, 如 std::mutex、atomic spinlock</p>
 </blockquote>
-</li>
-</ul>
-</li>
-<li><p>Release-Consume ordering （C++17 标准说不推荐使用）</p>
-<ul>
-<li><p>特点：Release-Consume ordering 是 Release-Acquire ordering 的部分实现</p>
-<p>  两者的不同之处在于，当对同一个原子变量 M 读写时：<br>  Release-Acquire ordering：A 在 store 之前（happened-before）的所有（包括非原子和relaxed原子）写操作，B 都可见<br>  Release-Consume ordering：A store 的所有（包括非原子和relaxed原子）写操作，B 只能看到与 M 相关的变量的修改   </p>
-</li>
-<li><p>cppref 的例子：由于 data 和 Release-Consume 读写的 ptr 没有依赖关系，consumer() 不一定能看到 <code>data = 42；</code></p>
+<p>4、Release-Consume ordering （C++17 标准说不推荐使用）<br>   &emsp;&emsp;• 特点：Release-Consume ordering 是 Release-Acquire ordering 的部分实现</p>
+<p>   &emsp;&emsp;两者的不同之处在于，当对同一个原子变量 M 读写时：<br>   &emsp;&emsp;&emsp;&emsp;Release-Acquire ordering：A 在 store 之前（happened-before）的所有（包括非原子和relaxed原子）写操作，B 都可见<br>    &emsp;&emsp;&emsp;&emsp;Release-Consume ordering：A store 的所有（包括非原子和relaxed原子）写操作，B 只能看到与 M 相关的变量的修改   </p>
+<p>   &emsp;&emsp;• cppref 的例子：由于 data 和 Release-Consume 读写的 ptr 没有依赖关系，consumer() 不一定能看到 <code>data = 42；</code>  </p>
+<p>   &emsp;&emsp;若第 12 行代码是 <code>while (!(p2 = ptr.load(std::memory_order_acquire)))</code>，则第 15 行 never fire    ，因为 release store 之前的代码 happens-before acquire load  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">std::atomic&lt;std::string*&gt; ptr;</span><br><span class="line">int data;</span><br><span class="line">void producer()</span><br><span class="line">&#123;</span><br><span class="line">    std::string* p  = new std::string(&quot;Hello&quot;);</span><br><span class="line">    data = 42;</span><br><span class="line">    ptr.store(p, std::memory_order_release);</span><br><span class="line">&#125;</span><br><span class="line">void consumer()</span><br><span class="line">&#123;</span><br><span class="line">    std::string* p2;</span><br><span class="line">    while (!(p2 = ptr.load(std::memory_order_consume)))</span><br><span class="line">        ;</span><br><span class="line">    assert(*p2 == &quot;Hello&quot;); // never fires: *p2 carries dependency from ptr</span><br><span class="line">    assert(data == 42); // may or may not fire: data does not carry dependency from ptr</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    std::thread t1(producer);</span><br><span class="line">    std::thread t2(consumer);</span><br><span class="line">    t1.join(); t2.join();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
 <h3 id="五、与内存模型结合的一些重要的特性"><a href="#五、与内存模型结合的一些重要的特性" class="headerlink" title="五、与内存模型结合的一些重要的特性"></a>五、与内存模型结合的一些重要的特性</h3><ul>
 <li><p>Release sequence  </p>
 <ul>
-<li>线程 A release store 原子变量 M，在此之后的所有对 M 的 <strong>RMW</strong> 操作，都会同步到其他线程 load M 的时候    </li>
+<li>定义：线程 A release store 原子变量 M，在此之后任何线程对 M 的 <strong>RMW</strong> 操作，都会同步到其他线程 load M 的时候    </li>
 <li>意义：不需要在多个读线程之间实现同步</li>
 <li>cppref 的例子：compare_exchange_strong 是 RMW 操作，不管是使用哪种 memory order，thread_2 对 flag 的修改都会同步到 thread_3</li>
 </ul>

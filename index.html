@@ -167,8 +167,8 @@ var _hmt = _hmt || [];
         <h3 id="一、为什么需要内存模型"><a href="#一、为什么需要内存模型" class="headerlink" title="一、为什么需要内存模型"></a>一、为什么需要内存模型</h3><p>C++11 引入多线程之后，C++ 需要内存模型来规定多线程如何读写数据。<br>因为代码的文本顺序并不等同于执行顺序，编译器和CPU都会为代码进行优化，此时数据竞争（data race）会导致执行结果与我们的期望相去甚远，甚至崩溃报错。</p>
 <h3 id="二、前置知识"><a href="#二、前置知识" class="headerlink" title="二、前置知识"></a>二、前置知识</h3><p>1、 Modification orders    </p>
 <p>&emsp;&emsp;• 单一原子变量拥有它自己的全局的修改顺序，也就是说在 A 线程看到 x 变量先读后写，那么B线程也必然看到这一顺序。这就是变量的<em>修改顺序一致性</em><br>&emsp;&emsp;• 非原子变量的修改顺序一致性，需要程序员自己保证</p>
-<p>2、 Sequenced-before    </p>
-<p>&emsp;&emsp;• 单线程中，operation A 在 operation B 之前完成计算，则称 A sequenced-before B<br>&emsp;&emsp;• Sequenced-before 具有传递性</p>
+<p>2、 Synchronizes-with   </p>
+<p>&emsp;&emsp;线程 A 对一个原子变量的写操作，在线程 B 读取的时候可见，称 A 的写操作 synchronizes-with B 的读操作</p>
         
       
 
